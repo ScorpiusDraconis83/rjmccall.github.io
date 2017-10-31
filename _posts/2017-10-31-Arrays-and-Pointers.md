@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [C] Arrays and pointers
+title: C arrays and pointers
 ---
 
 There are some pretty widespread misconceptions about arrays and pointers in C.

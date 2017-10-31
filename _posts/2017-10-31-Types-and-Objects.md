@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [C] Types and objects
+title: C types and objects
 ---
 
 Most types in C are what are called *complete object types*, which is to say,
