@@ -48,18 +48,20 @@ helpful to think of it as a generalization of "variable".)
 An expression in C has both a type and what I call a *value kind*, which
 is basically whether the expression is an *l-value* or an *r-value*.  An
 l-value is an expression that designates an object; an r-value is an
-expression that produces a value not linked to an object.  For example,
-if ``x`` is a variable of type ``int``, the expression ``x`` is an l-value
-expression which evaluates to a reference to the object declared by
-that variable, but the expression ``x + 1`` is an r-value expression
-which evaluates to the result of that addition.  Both expressions have
-type ``int``, but their value kind is different.  As shown in this example,
-most expressions in C do not expect an l-value; in these cases the
-l-value is implicitly converted to an r-value.  How this is done depends
-on the type of the l-value.  Most types are converted to an l-value by
-simply loading the current value from the object.  Functions, however,
-are converted to a pointer r-value by taking the address of the function,
-and a similar rule applies to arrays.
+expression that produces a value not linked to an object.
+
+For example, if ``x`` is a variable of type ``int``, the expression ``x`` is an
+l-value expression which evaluates to a reference to the object declared by that
+variable, but the expression ``x + 1`` is an r-value expression which evaluates
+to the result of that addition.  Both expressions have type ``int``, but their
+value kind is different.
+
+Most expressions in C do not expect an l-value.  In these cases the l-value is
+implicitly converted to an r-value, and how this is done depends on the type of
+the l-value.  Most types are converted to an l-value by simply loading the
+current value from the object. Functions, however, are converted to a pointer
+r-value by taking the address of the function.  A similar rule applies to
+arrays; [see the article](https://rjmccall.github.io/Types-and-Objects).
 
 (Technically, a function reference in C is not an l-value because it does
 not refer to an object.  However, this has no real effect, and it is
