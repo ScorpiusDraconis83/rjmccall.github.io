@@ -14,7 +14,7 @@ a pair of such integers, assuming that the translation unit contains a
 definition like this:
 
 ```
-  struct int_pair { int first; int second; };
+struct int_pair { int first; int second; };
 ```
 
 (The types that aren't complete object types can be broken into several
