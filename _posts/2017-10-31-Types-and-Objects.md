@@ -35,18 +35,21 @@ bytes in some target-specific way.
 
 The exact details of this layout, like the size and byte-ordering of the
 fundamental types and the rules for laying out ``struct`` types, are
-determined the target platform's C ABI, not C as a language.  However, C
-does impose some basic constraints.
+mostly determined the target platform's C ABI, not the C language spec.
+However, C does impose some constraints, such as setting minimum sizes for
+the integer types and requiring struct fields to be laid out in order.
 
-When a value is validly stored in memory, it is said to be stored in an
-*object*.  A declared variable creates an object of the variable's type.
-A struct or array object contains *subobjects* for its fields or elements,
-respectively, which are of course objects themselves.
+When a value is validly stored in memory, it is said to be stored in an *object*
+of the appropriate type.  A declared variable creates an object of the
+variable's type. A struct or array object contains *subobjects* for its fields
+or elements, respectively, which are of course objects themselves.
 
 (This use of "object" may be somewhat confusing to programmers
 coming from common object-oriented languages where an "object" is an
 instance of a class and has detectable reference identity.  It might be
 helpful to think of it as a generalization of "variable".)
+
+----
 
 An expression in C has both a type and what I call a *value kind*, which
 is basically whether the expression is an *l-value* or an *r-value*.  An
@@ -69,3 +72,17 @@ arrays; [see the article](https://rjmccall.github.io/Types-and-Objects).
 (Technically, a function reference in C is not an l-value because it does
 not refer to an object.  However, this has no real effect, and it is
 simpler to talk about function references as if they were l-values.)
+
+----
+
+Many of these rules are at least a little different in C++.  For example, a C++
+reference can be initialized with an l-value, binding the reference directly to
+the l-value's designated object and suppressing the conversion to an r-value.
+But when an l-value *is* converted to an r-value, the same basic rules apply.
+
+C++ also significantly complicates the classification of values by adding
+x-values, which are produced chiefly by calls returning r-value references
+(including ``std::move``).  What this post calls an r-value is now called
+a *pr-value* in C++, and what it calls an l-value is a *gl-value*, which
+encompasses both x-values and true l-values (since in both of these cases
+the result of the expression designates an object rather than a value).

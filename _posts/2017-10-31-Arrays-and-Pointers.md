@@ -40,8 +40,9 @@ multi-dimensional array, where different elements have different lengths,
 because this would require the elements to have different types from each
 other.
 
-Anyway, in terms of basic layout, array types are just normal complete
-object types.  But there are some special things about arrays:
+Anyway, in terms of basic layout, array types are just normal complete object
+types, completely unrelated to pointers.  But there are some special things
+about arrays:
 
 First, the contexts that implicitly turn l-values into r-values turn array
 l-values into pointer r-values by taking the address of the first element.
