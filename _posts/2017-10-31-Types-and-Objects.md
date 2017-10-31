@@ -3,7 +3,7 @@ layout: post
 title: C types and objects
 ---
 
-This post is most meant as a common background for other posts.
+This post is mostly meant to provide background for other posts.
 
 Most types in C are what are called *complete object types*, which is to say,
 they define a set of expressible values.  Not all types do!
