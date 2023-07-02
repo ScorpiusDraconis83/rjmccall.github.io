@@ -1,7 +1,7 @@
----
-layout: post
-title: C types and objects
----
+C types and objects
+====
+
+*Last edited: October 31st, 2017*
 
 This post is mostly meant to provide background for other posts.
 

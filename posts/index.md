@@ -5,3 +5,8 @@ I don't particularly like blogs as a format; if I'm going to write something lon
 
 So here's my current thinking.
 
+C primers
+---------
+
+- [C types and objects](c-types-and-objects)
+- [C arrays and pointers](c-arrays-and-pointers)
