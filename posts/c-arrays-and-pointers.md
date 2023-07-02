@@ -8,7 +8,7 @@ There are some pretty widespread misconceptions about arrays and pointers in C.
 Arrays and pointers are different but related things. I think the idea’s pretty
 easy to get, but you have to approach it the right way.
 
-So, first, go read the post about [Types and Objects](c-types-and-objects).
+So, first, go read the post about [Types and Objects](c-types-and-objects.md).
 
 Array types in C are complete object types, for the most part like any
 other object type.  Recall that a complete object type describes a set of

@@ -8,5 +8,5 @@ So here's my current thinking.
 C primers
 ---------
 
-- [C types and objects](c-types-and-objects)
-- [C arrays and pointers](c-arrays-and-pointers)
+- [C types and objects](c-types-and-objects.md)
+- [C arrays and pointers](c-arrays-and-pointers.md)
