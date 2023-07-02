@@ -1,3 +1,7 @@
+theme: jekyll-theme-minimal
+name: John McCall
+description: Computer programmer at Apple
+
 kramdown:
   # Use GitHub flavored markdown, including triple backtick fenced code blocks
   input: GFM
