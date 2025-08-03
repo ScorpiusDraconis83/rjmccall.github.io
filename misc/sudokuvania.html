@@ -9,6 +9,56 @@
         .revealed {
             text-decoration: underline;
         }
+        table.grid {
+            border-spacing: 0px;
+        }
+        table.grid tr td {
+            border: 1px solid black;
+            width: 1em;
+            height: 1em;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        table.grid tr td.r {
+            border-right: 3px solid black;
+        }
+        table.grid tr td.l {
+            border-left: 3px solid black;
+        }
+        table.grid tr td.t {
+            border-top: 3px solid black;
+        }
+        table.grid tr td.b {
+            border-bottom: 3px solid black;
+        }
+        table.grid tr td.sr {
+            border-right: 5px solid black;
+        }
+        table.grid tr td.sl {
+            border-left: 5px solid black;
+        }
+        table.grid tr td.st {
+            border-top: 5px solid black;
+        }
+        table.grid tr td.sb {
+            border-bottom: 5px solid black;
+        }
+        table.grid tr td.tan {
+            background-color: tan;
+        }
+        table.grid tr td.blue {
+            background-color: cornflowerblue;
+        }
+
+        table.worksheet tr td {
+            text-align: center;
+            width: 3em;
+        }
+        table.worksheet tr th {
+            text-align: center;
+            width: 3em;
+        }
+
     </style>
 
     <script type="module">
@@ -125,20 +175,35 @@
 
     <p>As you might expect, the boss puzzles in Sudokuvania are often quite challenging, but you should also not underestimate the difficulty of the world map. You will probably spend at least as much time trying to figure out the logic on the world map as you do on the bosses. Don't imagine you'll knock the whole hunt out in an afternoon, or even a day; my own personal solve time was close to 24 hours, spread over an entire weekend in which I fortunately didn't have many other responsibilities. Pace yourself and enjoy the experience. If nothing else, trying to solve while you're mentally fatigued will probably just lead to a lot of silly logic errors and frustration.
 
-    <p>Just like in Metroid and Castlevania, you will often find parts of the world map that you cannot solve until you have worked on a different part of the puzzle. In fact, even the 6x6 entrance area cannot be solved until you've completed several other regions. Backtracking is an important part of the experience. Because the world map really can be quite a hard puzzle on its own, of course, you won't always be sure if you're <i>supposed</i> to be backtracking, or if you're just missing something. You should be able to figure out what you're supposed to be looking at by just scanning this guide without reading the spoilers.
+    <p>Just like in Metroid and Castlevania, you will often find parts of the world map that you cannot solve until you have worked on a different part of the puzzle. In fact, even the 6x6 entrance area cannot be solved until you've completed several other regions. Backtracking is an important part of the experience. Because the world map really can be quite a hard puzzle on its own, of course, you won't always be sure if you're <i>supposed</i> to be backtracking, or if you're just missing something.
+        
+    <p>This guide is written in a way that I hope will allow you to "incrementally" get yourself unstuck. Text that is not hidden by default (<span class="hidden">like this</span>) should provide a general outline of what parts of the puzzle to focus on. Additionally, each paragraph in the guide starts with a hint or prompt that is not an outright spoiler for any of the logic. This initial hint will sometimes itself be hidden, if I feel that finding it is an interesting part of the challenge, but you can safely reveal it without worrying that I'll be giving away the logic. This applies <i>only</i> to the first phrase in the paragraph, whether it is hidden or not. If that phrase trails off and leads into some hidden text, the hidden text is very likely to be at least a partial spoiler. Later hidden text in a paragraph generally builds on the conclusions reached earlier in the paragraph. The hidden text does cover every major leap of logic in Sudokuvania, and you <i>will</i> spoil the puzzle if you read it all.
+
+    <p>Please don't imagine that I myself solved Sudokuvania in exactly the way I've presented it here. This guide leaves out an awful lot of details, like marking up the possible values of various cells and staring perplexedly at the screen, in favor of just presenting the core logic, which inevitably makes it seem like I found it all rather straightforward. This walkthrough was written during my second solution of the puzzle. While I did solve it on my own, both times from scratch, I found it a very challenging puzzle, and I frequently found myself making mistakes and unsure of how to make progress, even on the second time. I have also frequently re-ordered the logic from the way I originally discovered it, in order to present related conclusions together. My actual soluton was much more scatter-shot and inelegant.
 
     <p>The hiding of spoilers in this guide only works in a browser that supports CSS. If you have JavaScript disabled, you can read a spoiler by highlighting the text. If you have JavaScript enabled, you can also read a spoiler by clicking on it; you can then re-hide it by clicking on it again.
 
     <p>A very minor early spoiler, which you can read once you've revealed the first half of the Courtyard: <span class="hidden">clues don't always stay within grids. The rules for cells outside of grids are somewhat different, and you should not make deductions that assume that clues work the same way outside of grids as they do within them. Rest assured that the off-grid rules will eventually be explained</span>.
 
-    <p>This guide will use several shorthands:
+    <p>This guide will use several shorthands and pieces of jargon:
         <ul compact>
             <li>rX means row X of the current grid, with r1 being the top-most row.</li>
             <li>cY means column Y of the current grid, with c1 being the left-most column.</li>
             <li>rXcY means the cell in row X and column Y.</li>
             <li>rXcY = D means the digit in rXcY is D.</li>
-            <li>bN means box N of the current grid, counting left-to-right, top-to-bottom. In a standard 9x9 sudoku grid, b1 is the top-left and b6 is the middle box on the right.</li>
-        </ul>the abbreviation <code>rX</code> to mean row X of the current grid (with <code>r1</code> being the ), <code>cY</code> to mean column Y of the current </p>
+            <li>bN means box N of the current grid, counting left-to-right, top-to-bottom. In a standard 9x9 sudoku grid, b1 is the top left box and b6 is the central box on the right side.</li>
+            <li>X/Y/Z means "X, Y, or Z".</li>
+            <li>"Sudoku" means the ordinary rules of sudoku. If I say that you should do sudoku, I mean that you can make some progress by just applying those rules for a bit, with the implication that it's not too tricky or else I'd be giving you more hints.</li>
+            <li>A cell "sees" another cell if the rules of the puzzle would force them to have different digits, whether that's from the row/column/box restrictions of ordinary sudoku or from some other rule.</li>
+            <li>A "set" means a group of N cells that all see each other and that are all restricted to the same set of N digits (or subsets of it). For example, the unfilled cells in r1 of this mini grid form a 1/2/3 set:
+                <table class="grid">
+                    <tr><td></td><td class="r"></td><td></td><td>4</td></tr>
+                    <tr><td>4</td><td class="r"></td><td>2</td><td></td></tr>
+                </table>
+                r1c3 here is more constrained than 1/2/3 (it must be 1/3), but that's fine. If another cell saw all three of these cells, it would not be able to contain 1/2/3, because no matter how the digits were filled in, it would see each of them.
+            </li>
+            <li>A "pair" is just a set of two digits. The unfilled cells in r2 of the example above form a 1/3 pair.</li>
+        </ul>
 
 <h2>Chapter 1. Front Gate (grid 0)</h2>
 
@@ -151,11 +216,11 @@
 
     <p>You can see a bit of a green line in r3c1. This is a clue, but you don't have a rule for it yet, so you have to ignore it for now.
 
-    <p>The puzzle here is straightforward sudoku. <span class="hidden">Note that you will have to place digits into cells that still have fog.</span> You should have two of the three cells on Courtyard border filled. You can get some interesting pencil-marks in the upper half of the grid, but there's not really anything else you can do here yet. On to the next grid!
+    <p>The puzzle here is straightforward sudoku, but you will not be able to complete it yet. Note that you will have to place digits into cells that still have fog, and that's fine. You should end up having filled two of the three cells on the border with the grid to the lower-right (the Courtyard). You can get some interesting pencil-marks in the upper half of the grid, but there's not really anything else you can do here for now. On to the next grid!
 
 <h2>Chapter 2. Courtyard (grid 1)</h2>
 
-    <p>Note that we've gained a new rule, Guide THERMO. Read the description in the Learned Rules box, then click on one of the rule cells in that box and read more about it at the bottom of the puzzle description box. If you've done much variant sudoku, you've probably already seen this rule, but it's good to verify that there's nothing special about it in Sudokuvania.
+    <p>Note that we've gained a new rule, Guide THERMO. Read the description in the Learned Rules box, then click on one of the rule cells in that box and read more about it at the bottom of the puzzle description box. If you've done much variant sudoku, you've probably already seen this rule, but it's good to verify that there's nothing special about it in Sudokuvania. Note that cells on a thermometer always "see" the other cells on the thermometer: because the thermometer must <i>strictly</i> increase, digits may never repeat.
         
     <p>Click on one of the cells you've revealed in the new grid, then read the description of the Courtyard in the puzzle description box. You'll see that we also have a link to the boss puzzle. Since we can't see the boss cell yet, we'll put that off until later.
 
@@ -175,19 +240,15 @@
             <li><span class="hidden">r9c3 in b8</span></li>
         </ul>
 
-    <p><span class="hidden">r8c8 and r7c8 cannot be greater than 6, and</span> <span class="hidden">at least one of them must be the end of one of the thermometers in b6,</span> <span class="hidden">which is significant because these cells must be at least 5</span> <span class="hidden">and therefore the bulb can be at most 2.</span> <span class="hidden">Similarly, r2c2 and r3c2 cannot be less than 4, and at least one of them must be in a bulb in b4, so the end of that thermometer must be at least 8.</span> <span class="hidden">Those must be different thermometers: one goes from 1/2 to 5/6, and the other goes from 4/5 to 8/9.</span>
+    <p><span class="hidden">Start with the thermometers on the sides.</span> <span class="hidden">r8c8 and r7c8 cannot be greater than 6, and </span><span class="hidden">at least one of them must be the end of one of the thermometers in b6, </span><span class="hidden">which is significant because these cells must be at least 5</span> <span class="hidden">and therefore the bulb can be at most 2.</span> <span class="hidden">Similarly, r2c2 and r3c2 cannot be less than 4, and at least one of them must be in a bulb in b4, so the end of that thermometer must be at least 8.</span> <span class="hidden">Those must be different thermometers: one goes from 1/2 to 5/6, and the other goes from 4/5 to 8/9.</span>
 
     <p>Can we constrain those further? <span class="hidden">What do we now know about r7c8?</span> <span class="hidden">If r7c8 = 6, c9 in b6 would have to be 7/8/9.</span> <span class="hidden">We know there's an 8/9 in this box, so that's impossible.</span> <span class="hidden">So these numbers are at most 5, but one of them has to be a thermometer end, which mean it's at least 5. Therefore, one of the thermometers is 1/2/3/4/5.</span> <span class="hidden">The same idea applies in b4: r3c2 cannot be 4 because that would force 1/2/3 in c1, which contradicts that one of the thermo bulbs is 1/2. So r3c2 and r2c2 must be at least 5, and one of them has to be in a thermo bulb, which means it's at most 5. Therefore, the other thermometer is 5/6/7/8/9.</span>
 
-    <p><span class="hidden">r9c3 is is at least 4.</span><span class="hidden">It must also be on the thermometer that runs along r7 in b8.</span> <span class="hidden">So if that's the 1/2/3/4/5 thermometer, it must be one of 2/3/4; but then b8 contains both 2 and 3 on both r7 and r8, which is a contradiction. So the thermometer starting in r6c3 must be the 5/6/7/8/9 thermometer, and the one starting in r4c3 must be 1/2/3/4/5.</span> Now let's revisit what we said before: <span class="hidden">remember that r3c2 and r2c3 must be in c3 in b4.</span> <span class="hidden">They are both at least 5, so they must be in r5c3 and r6c3, which means one of them is exactly 5, and it must be r3c2. This puts 2/3/4 in c1 in b4.</span> <span class="hidden">By the same logic, r7c8 must be 5, and c9 in b6 must be 6/7/8.</span> Remember that you can place those exactly because of the thermometer.
-    
-    <p><span class="hidden">Where can 1 be in b1? Only c1. Similarly, 9 in b9 can only be in c9.</span> <span class="hidden">This makes r3c9 and r7c1 naked singles.</span>
+    <p><span class="hidden">It'd be nice to figure out which is which. Does one seem more constrained by other clues?</span> <span class="hidden">r9c3 is is at least 4.</span><span class="hidden">It must also be on the thermometer that runs along r7 in b8.</span> <span class="hidden">So if that's the 1/2/3/4/5 thermometer, it must be one of 2/3/4; but then b8 contains both 2 and 3 on both r7 and r8, which is a contradiction. So the thermometer starting in r6c3 must be the 5/6/7/8/9 thermometer, and the one starting in r4c3 must be 1/2/3/4/5.</span> Now let's revisit what we said before: <span class="hidden">remember that r3c2 and r2c3 must be in c3 in b4.</span> <span class="hidden">They are both at least 5, so they must be in r5c3 and r6c3, which means one of them is exactly 5, and it must be r3c2. This puts 2/3/4 in c1 in b4.</span> <span class="hidden">By the same logic, r7c8 must be 5, and c9 in b6 must be 6/7/8.</span> Remember that you can place those exactly because of the thermometer. <span class="hidden">Where can 1 be in b1? Only c1. Similarly, 9 in b9 can only be in c9.</span> <span class="hidden">This makes r3c9 and r7c1 naked singles.</span>
     
     <p>Now we can look at the remaining outer thermometers. <span class="hidden">All the cells in r8 in b8 are at most 5. r7c3 is at most 4, so r8c2 is at most 3. r8c8 is at most 4.</span> <span class="hidden">That makes five digits that are 5 or less, and 5 can only be on in b8, forcing it into r8c4.</span> <span class="hidden">r3c7 must be at least 6, so it is 6/7, r2c8 is 7/8, and r1c8 is 8/9.</span> <span class="hidden">r2c5 is at least 5, so r2c6 is at least 6. r2c4 cannot be less than 7. r2c2 cannot be less than 6. So there are at least five numbers greater than 5, and only r2c5 can be exactly 5, so it is.</span> <span class="hidden">This forces 5 in the other three boxes.</span>
     
-    <p>Finally we can look at b5. <span class="hidden">If r4c6 is 6 or more, r5c5 must be 8 or more, and then r6c4 is impossible. So it is 2/3.</span> <span class="hidden">Similarly, if r6c4 is 4 or less, r5c5 must be 2 or less, and then r4c6 is impossible. So it is 7/8.</span> <span class="hidden">r4c8 can only be 2/3, so the only possible place for 2 in b5 is r4c6, which also gives r4c8 = 3.</span> <span class="hidden">The only place for 3 now in b5 is r6c6.</span>
-
-    <p><span class="hidden">r8c6 = 1, which makes a 2/4 pair in r8c5 and r8c8, forcing r8c2 = 3 and r7c3 = 4.</span> <span class="hidden">r9c6 = 9 is a naked single.</span> <span class="hidden">r9c4 = 3 is the only possible place for it in b8.</span>
+    <p>Finally we can look at b5. <span class="hidden">If r4c6 is 6 or more, r5c5 must be 8 or more, and then r6c4 is impossible. So it is 2/3.</span> <span class="hidden">Similarly, if r6c4 is 4 or less, r5c5 must be 2 or less, and then r4c6 is impossible. So it is 7/8.</span> <span class="hidden">r4c8 can only be 2/3, so the only possible place for 2 in b5 is r4c6, which also gives r4c8 = 3.</span> <span class="hidden">The only place for 3 now in b5 is r6c6.</span> <span class="hidden">r8c6 = 1, which makes a 2/4 pair in r8c5 and r8c8, forcing r8c2 = 3 and r7c3 = 4.</span> <span class="hidden">r9c6 = 9 is a naked single.</span> <span class="hidden">r9c4 is the only possible cell for a 3 in b8.</span>
     
     <p>The remainder of the puzzle is straightforward. In case you need to refer back to it, the number to place in the boss cell is <span class="hidden">3</span>.
 
@@ -203,17 +264,17 @@
 
     <p>The clues in b9 are a little hard to read. There's one an arrow occupying at least r6c9, r7c9, and r8c8, and another occupying at least r9c9, r8c9, and r7c8. You can't see if the unrevealed cells are the circles of the arrows, though. <span class="hidden">The clues interact in interesting ways; you might find it helpful to mark the possibilities in the four thermometer cells.</span> <span class="hidden">r7c8 is at least 5, so r8c9 must be 2 or 3, and r7c8 cannot be greater than 7.</span> <span class="hidden">The only possible place for 9 in r7 is r7c7.</span> <span class="hidden">If r7c8 were 7, the sum on the arrow would already be 9 without including r9c9, so r9c9 would have be the circle, and it would have to be 9, which is a contradiction.</span> <span class="hidden">This creates a 5/6 pair in r7. You should be able to do a lot of sudoku now.</span> <span class="hidden">r6c9 must be 6/8/9, and the two other cells on its arrow sum to at least 4, so it cannot just be part of the sum; it must be the circle.</span> <span class="hidden">r8c8 must be 3/5/6, but only 5 actually makes a valid sum in r6c9.</span> This should let you fill all but two cells in boxes 4-9; you can mark your options in the other cells, but you can't do anything there yet. Off to the next grid!
 
-<h2>Chapter 4. Quarters (grid 2)</h2>
+<h2>Chapter 5. Quarters (grid 2)</h2>
 
     <p>Go ahead and read the description of the new area in the puzzle description. Because these two grids are offset by one cell vertically, the box lines can be a little tricky at first. <span class="hidden">There's a 1 in r3c1 which can see all three cells on this arrow, so its sum must be 9, and the circle must be in r2c4.</span> <span class="hidden">r2c5, the circle that was just revealed, cannot be greater than 5 because of the thermometer.</span> <span class="hidden">It has at least two cells on it, neither of which can be 1, so it must also be at least 5. You can fill in all the thermometer cells you can see.</span> <span class="hidden">The thermometer continues into r3c6, but this cell sees a 1, a 2, and a 3; it must be 4.</span> You should take a moment to fill in what you can, but you're locked out of the rest of this grid for now.
 
-<h2>Chapter 4b. Factory (grid 3)</h2>
+<h2>Chapter 5b. Factory (grid 3)</h2>
         
     <p>If you filled in the possibilities right, you should be able to fill the other overlapping cell between these grids. And now you've unlocked WHISPER dash! Take the opportunity to read the grid description as well as the description of the new rule. This is the common "German whisper line" rule from variant sudoku. There are two general insights you should be able to figure out immediately about these lines: <span class="hidden">the digits on the line are never 5</span> and <span class="hidden">they alternate polarities between "high" (greater than 5) and "low" (less than 5).</span> Note that the clue in this grid doesn't actually tell us anything we don't know, because the thermometer already makes r8c2 at least 6!
 
     <p>There is some interesting logic you can do here to fill a few cells, but you won't make much headway beyond that. For now, you need to notice that a couple of whispers were also revealed back in the previous grid.
 
-<h2>Chapter 4c. Quarters (grid 2)</h2>
+<h2>Chapter 5c. Quarters (grid 2)</h2>
 
     <p>The new clues here are quite constrained. <span class="hidden">Both r4c7 and r4c9 cannot be greater than 3.</span> <span class="hidden">They also both see the 2 in r4c1, so you should be able to fill them in.</span> <span class="hidden">The newly-revealed line must have at least one digit less than 5 on it, but both cells see 1, 2, and 3, so it must be a 4/9 pair, which can be placed.</span>
 
@@ -221,19 +282,21 @@
 
     <p>You can see a new kind of clue, a red line, running off the grid. Curiouser and curiouser, but not much to be done with it yet. The other clues that just got revealed are more promising. <span class="hidden">These two lines meet in r7c8, so r6c7 and r6c9 must have the same "polarity", either high or low.</span> <span class="hidden">If they were low, r7c8 would have to be 9, which it cannot be.</span> <span class="hidden">r7c8 must be low. It cannot be 4 because both of the other cells would have to be 9. It cannot be 3 because they would have to be an 8/9 pair, but they both see an 8. It cannot be 2 by sudoku. So it must be 1.</span> <span class="hidden">r8c8 sees 8 and 9, and it cannot be 6 because it would force a 1 into r9c7, so it must be 7.</span> <span class="hidden">The 2 in r9c7 constrains 2 in b6 into r5c9, and the 7 in this box must be in r6c9.</span> <span class="hidden">The 3 in c8 must be in r9c8.</span> And... well that's interesting to learn.
 
-<h2>Chapter 5. Factory (grid 3)</h2>
+    <p>You can do a little more in this grid before you run off to take advantage of the new rule. <span class="hidden">The 2 and 3 in r6 can only be in b5, which </span><span class="hidden">forces r6c7 = 9.</span> <span class="hidden">The 1 and 6 can only be in r6c2 and r5c3,</span><span class="hidden"> so r6c1 must be 4/5</span>. That seems to be it, though; about half the grid is still wide open. Back to the factory.
+
+<h2>Chapter 6. Factory (grid 3)</h2>
 
     <p>Well, now that we have a knight's move restriction in this grid (and only in this grid), we can make some real progress. Consider the arrow. <span class="hidden">It cannot have a 1, and it cannot be a 2/3 pair because of r9c3, so it must sum to at least 6.</span> <span class="hidden">But its digit is constrained in b7: it cannot be on its own arrow, so it must be 6/7.</span> <span class="hidden">If r8c1 were 7, r6c1 would be forced to be 6, but r9c3 would also be forced to be 2, and it would be impossible to fill the arrow.</span> <span class="hidden">If r8c2 were 6, r9c3 would be forced to be 2 again, and either possibility for r6c1 leads to a contradiction.</span>  <span class="hidden">r6c1 is interesting.</span> <span class="hidden">The arrow cannot have a 1, and it cannot be a 2/3 pair because of r9c3, so it must sum to at least 6.</span> <span class="hidden">But its digit is constrained in b7: it cannot be on its own arrow, and it cannot be in r8c2 by the knight restriction, so it must be in one of the other three cells. And those cells are filled with 1, 2/3, and 5/6. So it must be 6.</span> You should be able to finish the thermometer and b7.
     
     <p>You can now see a relatively long thermometer in b5. <span class="hidden">r6c4 has at least two digits both less and greater than it, and it cannot be 4, 5, or 6, so it must be 3 or 7.</span> <span class="hidden">If it were 3, one of the ends of the thermometer would have to be 321, but both of the cells that a 2 could be in are a knight's move from r7c3. So it is 7.</span> <span class="hidden">That means one of the ends must be 789. If the 9 were in r6c6, there would be nowhere to place 9 in b8.</span> <span class="hidden">r6c5 must be less than 7 by the thermometer, but it cannot be 6 or 5, so it is 2/3/4.</span> <span class="hidden">The 3 in b8 must be in c6, so it must be in c5 in b5.</span> <span class="hidden">r5c3 must be low, but it cannot be 2 or 4, and it cannot be 3 because it would see all three possible positions of 3 in b5. Therefore it is 1.</span> <span class="hidden">r7c4 is now a naked single 6.</span> <span class="hidden">The only possible place for 1 in b8 is r8c5.</span> <span class="hidden">This forces 1 in b5 into r4c6.</span> And now we've found our second boss cell!
 
-<h2>Chapter 6. Disassembly Line (factory boss)</h2>
+<h2>Chapter 7. Disassembly Line (factory boss)</h2>
 
     <p>This is a very clever exercise in both of those general insights about German whisper lines.
         
-    <p><span class="hidden">Start by placing 5s. You should be able to place all nine of them right away:</span> <span class="hidden">there's only 1 cell that's not on a whisper line in both c2 and c8, </span><span class="hidden">which only leaves one possible cell in c5, </span><span class="hidden">which restricts c4 and c6 via the knight constraint, </span><span class="hidden">which restricts c3 and c7 via the knight constraint, </span><span class="hidden">which finally resists c1 and c9.</span>
+    <p><span class="hidden">Note that the whisper lines never occupy a complete column.</span> <span class="hidden">5 can never be on a whisper line, so it's heavily constrained here.</span> <span class="hidden">You should be able to place all nine 5s right away:</span> <span class="hidden">there's only 1 cell that's not on a whisper line in both c2 and c8, </span><span class="hidden">which only leaves one possible cell in c5, </span><span class="hidden">which restricts c4 and c6 via the knight constraint, </span><span class="hidden">which restricts c3 and c7 via the knight constraint, </span><span class="hidden">which finally resists c1 and c9.</span>
     
-    <p><span class="hidden">4 and 6 cannot be next to two cells on the same line, so the ends of the two long lines form a 4/6 pair, on both lines.</span> <span class="hidden">The 4 must be next to a 9, and the 6 must be next to a 1, so the next cells in must be a 1/9 pair, again on both lines.</span> <span class="hidden">Since 3 cannot be at an end, it must be next to the 8 and 9, and similarly 7 must be next to the 1 and 2. So the next cells in form a 3/7 pair, and the middle two cells must be 2/7.</span> From top to bottom, then, each long line is <span class="hidden">4/6, 1/9, 3/7, 2/8, 2/8, 3/7, 1/9, 4/6</span>.
+    <p>What can you deduce about where certain digits go on the lines? <span class="hidden">4 and 6 cannot be next to two cells on the same line, so the ends of the two long lines form a 4/6 pair, on both lines.</span> <span class="hidden">The 4 must be next to a 9, and the 6 must be next to a 1, so the next cells in must be a 1/9 pair, again on both lines.</span> <span class="hidden">Since 3 cannot be at an end, it must be next to the 8 and 9, and similarly 7 must be next to the 1 and 2. So the next cells in form a 3/7 pair, and the middle two cells must be 2/7.</span> From top to bottom, then, each long line is <span class="hidden">4/6, 1/9, 3/7, 2/8, 2/8, 3/7, 1/9, 4/6</span>.
 
     <p>Time for some coloring. If you're new to this, shading cells in different colors can be a very useful tool for reasoning about where certain digits must be even when you aren't sure of the exact digits. In this puzzle, it's going to be very useful to reason about high and low digits. You don't know whether the digit in r1c2 is high or low, but you know it's one of those; and you know that the cell in r2c2 is the opposite, and that the cell is r3c2 is the opposite of that, and so on. Use the color tool (in the bottom right of the SudokuPad UI) to shade r1c2 dark gray and r2c2 purple. Every cell you mark gray will have the same high/low polarity as r1c2, and every cell you mark purple will have the opposite. You can use whatever colors you like, of course, but I think these two look nice and are still readable on the light blue background that Skeptical Mario chose for this grid.
 
@@ -247,7 +310,7 @@
 
     <p>You should be able to finish the puzzle from here. The digit to place back in the boss cell is <span class="hidden">8</span>.
 
-<h2>Chapter 7. Factory (grid 3)</h2>
+<h2>Chapter 8. Factory (grid 3)</h2>
 
     <p>You've revealed the rest of the factory, and you've unlocked a new rule: DOUBLE jump. Go ahead and read about the new rule. If you're used to variant sudoku, this is just a standard Kropki black dot, making one digit the double of the other. This means the lower digit must be 1, 2, 3, or 4, and the higher must be 2, 4, 6, or 8; so a digit adjacent to a dot can never be 5, 7, or 9.
 
@@ -255,17 +318,17 @@
 
     <p>Now we can use our new clue. <span class="hidden">The black dot tells us that r5c8 must be 4.</span> <span class="hidden">So the 4 in r6 can only be in r6c5.</span> <span class="hidden">r5c2 can only be 3, which means you can fill every cell in b5.</span> <span class="hidden">This makes r6c7 a naked single 3, which makes </span><span class="hidden">r8c6 a naked single 9.</span> <span class="hidden">There is only one remaining cell for 5 in b4.</span> <span class="hidden">r4c3 can only be 4.</span> <span class="hidden">r2c3 can only be 7.</span> <span class="hidden">That constrains 7 in b2 into c6, which means the only cell left for it in c5 is r7c5.</span> <span class="hidden">And that places the last two 8s in the grid.</span>
 
-    <p><span class="hidden">The remaining cells in r8 are 2/3/4, but </span><span class="hidden">knight constraints force r8c7 to be 4 and r8c9 to be 3.</span> <span class="hidden">The dotted cells in b3 now cannot have a 3 or a 4, so they must be a 1/2 pair.</span> The rest of the grid is straightforward, and you should have it completely filled.
+    <p><span class="hidden">b9 is a nice place to look next.</span> <span class="hidden">The remaining cells in r8 are 2/3/4, but </span><span class="hidden">knight constraints force r8c7 to be 4 and r8c9 to be 3.</span> <span class="hidden">The dotted cells in b3 now cannot have a 3 or a 4, so they must be a 1/2 pair.</span> The rest of the grid is straightforward, and you should have it completely filled.
 
-    <p>Hmm. You can see these book clues in the new grid, but you don't know what they mean. You must be missing something somewhere else.
+    <p>Hmm. You can see some book clues (&#x1f4d6;) in the new grid, but you don't know what they mean. You must be missing something somewhere else.
 
-<h2>Chapter 7b. Front Gate (grid 0)</h2>
+<h2>Chapter 8b. Front Gate (grid 0)</h2>
 
     <p>Did you forget that there was a bit of green line here? You know what that means now. Go ahead and place a <span class="hidden">1 in r2c1</span>, and a little sudoku from there will reveal the rest of the grid.
 
     <p>That black dot is interesting. <span class="hidden">You know that the left cell must be 4/6 and the right cell must be 1/2/3.</span> <span class="hidden">So it must be a 2/4 or 3/6 pair. But if it's a 2/4 pair, it'll be impossible to place a digit in r2c2.</span> That should let you finish the front gate at last.
 
-<h2>Chapter 8. Battlements (grid 4)</h2>
+<h2>Chapter 9. Battlements (grid 4)</h2>
 
     <p>Take a moment to read the description of the new grid. It might not look like you can do much here, but <span class="hidden">that black dot is more constrained that it might seem.</span> <span class="hidden">It cannot be a 1/2 or 3/6 pair, so it must be 2/4 or 4/8. Both have a 4, and the 4 cannot be in b7.</span>
 
@@ -277,13 +340,13 @@
 
     <p><span class="hidden">7 also seems like a lot of cells. Where can the 9 be in c5?</span> <span class="hidden">It must be in r7 at the earliest. But if it were in r7, </span><span class="hidden">it wouldn't be possible to see the cell in r6, because it would be at most 4, and there are 5 cells before it in the column. So the eye would only be able to see at most 6 cells.</span> <span class="hidden">That means the 4 cannot be on the whisper segment in this column.</span> <span class="hidden">What digits can be in first two cells?</span> <span class="hidden">r1c5 cannot be more than 3, so it must be 1/2. r2c5 must be 1/2/4.</span> <span class="hidden">If they were both 1/2, there wouldn't be any low digit left that could be on the whisper; so r2c5 must be 4.</span> <span class="hidden">This means the 3 isn't visible, and the 1/2 on the whisper line can't be visible. So every other cell must be visible.</span> <span class="hidden">That means that they must be filled with digits in ascending order in the column! r1c5 can still be either 1 or 2, but r4c5 must be 5, r5c5 must be 6, the high digit on the whisper must be 7, r8c5 must be 8, and r9c5 must be 9.</span> <span class="hidden">Sudoku puts a 7 in r7c1, so the 7 in c5 must be in r6c5.</span>
 
-    <p>Back to r6. <span class="hidden">This 7 is a fairly tight constraint.</span> <span class="hidden">r6c4 cannot be greater than 7 without breaking the eye, and it cannot be 3, 4, 5, or 6 by sudoku, so it must be 1/2.</span> <span class="hidden">Since r6c6 must also be 1/2 because of the whisper line, r6c3 must 5/6 (it cannot be 8/9 because of the eye). So the eye can see at least the 3, 4, 5/6, and 7.</span> <span class="hidden">If the 9 were in r6c7, the eye would only see 5 cells. So it must be in r6c9.</span> Note that you can ignore this clue now: no matter how you fill the remaining cells, the eye will see 6.
+    <p>Back to r6. <span class="hidden">This 7 is a fairly tight constraint.</span> <span class="hidden">r6c4 cannot be greater than 7 without breaking the eye, and it cannot be 3, 4, 5, or 6 by sudoku, so it must be 1/2.</span> <span class="hidden">Since r6c6 must also be 1/2 because of the whisper line, r6c3 is very constrained: it cannot be 1/2/3/4/7 because they are already placed in r6, it cannot be 5 because that is in c3 in b7, and it cannot be 8/9 because of the eye. Therefore, it must be 6.</span> <span class="hidden">So the eye can see at least the 3, 4, 6, and 7, and it must see two more, which must be the 8 and 9.</span> <span class="hidden">If the 9 were in r6c7, the eye would only see 5 cells. So it must be in r6c9.</span> Note that you can ignore this clue now: no matter how you fill the remaining cells, the eye will see the 8 and therefore see 6 cells. Note that placing this digit reveals some clues in the new grid. Don't try to use them yet; 
 
-    <p><span class="hidden">Where is the 8 in c8?</span> <span class="hidden">It cannot be lower than r5, which means the 8 in r6 can only be in r6c7.</span> <span class="hidden">r6c8 must be 5/6; does that constrain the eye in c8?</span> <span class="hidden">It does: it cannot see both r5c8 and r4c8 anymore. The only possibility would be if the three cells in this box were 5/6/7, and that is impossible because of the 6 in r5c5.</span> <span class="hidden">But there are only five other cells before the 9. The eye must see all four cells in rows 6-9 and one of the cells in row 4-5.</span> <span class="hidden">To be visible over the 5/6 in r6c8, one of those last two cells must be 6/7.</span>
+    <p><span class="hidden">Where is the 8 in c8?</span> <span class="hidden">It cannot be lower than r5, which means the 8 in r6 can only be in r6c7.</span> <span class="hidden">Does the 5 in r6c8 onstrain the eye in c8?</span> <span class="hidden">It does: it cannot see both r5c8 and r4c8 anymore. The only possibility would be if the three cells in this box were 5/6/7, and that is impossible because of the 6 in r5c5.</span> <span class="hidden">But there are only five other cells before the 9. The eye must see all four cells in rows 6-9 and one of the cells in row 4-5.</span> <span class="hidden">To be visible over the 5 in r6c8, one of those last two cells must be 6/7.</span>
 
     <p>The eye in c7 <span class="hidden">can see the 8 in r6c7 and the 9 beneath it. There are only five cells above the 8, and it must see exactly four of them.</span> <span class="hidden">But you've already placed two digits from 5/6/7 in b6, which means one of r4c7 or r5c7 must be less than 4.</span> <span class="hidden">So the other three cells must be visible, which means the first two cells must be 1 and 2 in that order.</span> A short amount of sudoku later, and you'll find the third boss cell.
 
-<h2>Chapter 9. Skysitter (Battlements boss)</h2>
+<h2>Chapter 10. Skysitter (Battlements boss)</h2>
 
     <p>This puzzle is quite fun. There are quite a few clues here, and it can be a little intimidating to break in. The opposing eyes are an important constraint, since the numbers are very small. The arrows are also a powerful restriction; and of course there are also some black dots.
 
@@ -291,25 +354,117 @@
         
     <p>Now consider the arrows alone for a moment. <span class="hidden">There are five cells on the arrows in both b1 and b7.</span> <span class="hidden">The circles on the arrows must sum to at least 15, and so neither can be less than 6; but </span><span class="hidden">they also cannot sum to more than 18, and this means that at least the 1 and 2 must appear on the arrows.</span> <span class="hidden">The 1 and 2 in c1 must therefore be in b4: the 1 in r5c1, and the 2 on a dotted pair. Therefore the four dotted digits are 2/3/4/6.</span>
 
-    <p><span class="hidden">The cell in c1 of the three-cell arrows is the largest on the arrow. If it is a 3, the other cells must be 1/2, and the circle must be 6.</span> <span class="hidden">But the 3 must be paired with a 6 for the black dot, which would be in the same row as the circle. Therefore the digits in c1 of the arrows must be 4/6, and the digits in b4 they are paired with are 2/3.</span> <span class="hidden">The other digits on the arrow with the 6 must be 1/2, and its circle must be 9. Therefore there is a 9 in either r4c4 or r6c4.</span> <span class="hidden">Where, then, can the 9 be in c6? Only in r2c6.</span> <span class="hidden">This means the 9 in r3 must be in b3.</span> <span class="hidden">There are therefore at least six cells to the left of the 9 in r3. If r3c1 is 4, at least one of these cells must have a digit higher than 4 and less than 9, making it visible to the eye. So r3c1 = 6.</span> <span class="hidden">Similarly, the 9 must be in r3c7, and the 7 and 8 must be in c8 and c9 &mdash; in that order, to satisfy the eye to the right.</span>
+    <p><span class="hidden">So there are four options for the dotted cells in c1. Do all of them actually work?</span> <span class="hidden">Recall that the cell must be the largest digit on the arrow. If it is a 3, the other cells must be 1/2, and the circle must be 6.</span> <span class="hidden">But the 3 must be paired with a 6 for the black dot, which would be in the same row as the circle. Therefore the digits in c1 of the arrows must be 4/6, and the digits in b4 they are paired with are 2/3.</span> <span class="hidden">The other digits on the arrow with the 6 must be 1/2, and its circle must be 9. Therefore there is a 9 in either r4c4 or r6c4.</span> <span class="hidden">Where, then, can the 9 be in c6? Only in r2c6.</span> <span class="hidden">This means the 9 in r3 must be in b3.</span> <span class="hidden">There are therefore at least six cells to the left of the 9 in r3. If r3c1 is 4, at least one of these cells must have a digit higher than 4 and less than 9, making it visible to the eye. So r3c1 = 6.</span> <span class="hidden">Similarly, the 9 must be in r3c7, and the 7 and 8 must be in c8 and c9 &mdash; in that order, to satisfy the eye to the right.</span>
     
-    <p><span class="hidden">Along the same lines, because r7c1 = 4, the 9 in r7 cannot be further right than c5, which is also the furthest left it can appear. The cells between the 4 and 9 are 1/2/3 in some order.</span> <span class="hidden">The 1 must be on the arrow, or else the sum breaks.</span> <span class="hidden">If r8c1 = 7, then its arrow cells must be 2/5; but r2c1 = 8, and its arrow cells must be 3/5, and there is nowhere for 5 in c1.</span>
+    <p><span class="hidden">Where can the 9 go in r7?</span> <span class="hidden">Because r7c1 = 4, the 9 in r7 cannot be further right than c5, which is also the furthest left it can appear. The cells between the 4 and 9 are 1/2/3 in some order.</span> <span class="hidden">The 1 must be on the arrow, or else the sum breaks.</span> <span class="hidden">If r8c1 = 7, then its arrow cells must be 2/5; but r2c1 = 8, and its arrow cells must be 3/5, and there is nowhere for 5 in c1.</span>
 
     <p>It's finally time to consider some of the other arrows. <span class="hidden">r7c6 must be 5/6/7/8.</span> <span class="hidden">It cannot be 8, so the 8 in r7 must be in b9.</span> <span class="hidden">The least the arrow-sum can be is 7, with a 5 and two 1s. But it cannot be 7 or 8 by sudoku, so it must be 9.</span> <span class="hidden">The other cells on the arrow cannot sum to more than 4, so they must individually be 3 or less.</span> <span class="hidden">If r8c7 = 3, it must be paired with 6, which forces a 6 onto the arrow and makes the sum at least 10. So it is 1/2.</span>
 
-    <p><span class="hidden">r1c8 cannot be greater than 6.</span> <span class="hidden">r3c6 cannot be less than 3, so the other digits on this arrow cannot sum to more than 3. Therefore they are both 1 or 2.</span> <span class="hidden">At least one of them must be 1, so r6c5 and r8c7 cannot both be 1; thus, r7c6 cannot be 7.</span> <span class="hidden">By the same token, though, they cannot both be 1, because then r6c5 and r8c7 would have to be 3 and 2, respectively.</span> <span class="hidden">Therefore they sum to 3, r3c6 = 3, and r1c8 = 6.</span>
+    <p><span class="hidden">The arrow starting in r1c8 is pretty constrained.</span> <span class="hidden">r1c8 cannot be greater than 6.</span> <span class="hidden">r3c6 cannot be less than 3, so the other digits on this arrow cannot sum to more than 3. Therefore they are both 1 or 2.</span> <span class="hidden">At least one of them must be 1, so r6c5 and r8c7 cannot both be 1; thus, r7c6 cannot be 7.</span> <span class="hidden">By the same token, though, they cannot both be 1, because then r6c5 and r8c7 would have to be 3 and 2, respectively.</span> <span class="hidden">Therefore they sum to 3, r3c6 = 3, and r1c8 = 6.</span>
 
     <p><span class="hidden">Where is 8 in b6?</span> <span class="hidden">It cannot be on the arrows, because the circle cannot be 9. Therefore it is in r5.</span> <span class="hidden">r5c6 must be at least 5, but it cannot be 8 or 9.</span> <span class="hidden">It cannot be 5 because neither arrow can be a 2/3 pair.</span> <span class="hidden">If it is 6, the bottom arrow is 1/5 and the top arrow is 2/4. But a combination of constraints forces r8c7 = 1, and therefore r8c8 = 2, which makes the 2 impossible to place on the top arrow.</span> <span class="hidden">Hence r5c6 = 7.</span> <span class="hidden">The 1/2 pair in c7 means that r4c7 and r6c7 are both at least 3.</span> <span class="hidden">r4c8 and r6c8 are thus both no more than 4.</span> <span class="hidden">r2c8 and r8c8 are also no more than 4, so these four cells are collectively 1/2/3/4. But the 3 can only be in r6c8.</span> This places digits in a number of other cells.
 
-    <p><span class="hidden">r8c3 must be at least 5, so r9c2 must be 4 or less; it can only be 2.</span> <span class="hidden">r2c3 = 3 because there is no way to make this arrow sum without a 3.</span>
+    <p><span class="hidden">Think about the other arrow in b7.</span> <span class="hidden">r8c3 must be at least 5, so r9c2 must be 4 or less; it can only be 2.</span> <span class="hidden">r2c3 = 3 because there is no way to make this arrow sum without a 3.</span>
 
-    <p><span class="hidden">In c6, if the bottom eye can see the 6, it can also see the 7 and the 9.</span> <span class="hidden">This means it will see four cells. Therefore the 6 must be blocked, which it can only be by the 8.</span> <span class="hidden">The 8 cannot be in r9c6 or else the eye will see only two cells, so r8c6 = 8.</span>
+    <p><span class="hidden">Pay attention to the eyes now.</span> <span class="hidden">In c6, if the bottom eye can see the 6, it can also see the 7 and the 9.</span> <span class="hidden">This means it will see four cells. Therefore the 6 must be blocked, which it can only be by the 8.</span> <span class="hidden">The 8 cannot be in r9c6 or else the eye will see only two cells, so r8c6 = 8.</span>
 
     <p>The rest of the puzzle can be solved with ordinary sudoku logic. The digit to place in the boss cell is <span class="hidden">2</span>.
 
-<h2>Chapter 10. Battlements (grid 4)</h2>
+<h2>Chapter 11. Battlements (grid 4)</h2>
 
-    <p>Placing the 2 reveals a number of new eyes throughout the world map. We're not quite done with this grid yet, though.
+    <p>Placing the 2 reveals a number of new eyes throughout the world map. You're not quite done with this grid yet, though. The boss digit exposes a number of opportunities for sudoku: <span class="hidden">one line of reasoning leads to r2c4 = 1</span>, <span class="hidden">there is only one possible cell for 6 in b8</span>, and <span class="hidden">there is only one possible cell for 8 in b9</span>. And there's one that's <i>very</i> easy to miss: <span class="hidden">r1c1 = 4 in the factory actually sees r7c9 in this grid! That puts the 4 in r7 in r7c8</span>. As a result, <span class="hidden">r7c9 can only be 3/6, and since </span><span class="hidden">r1c9 and r2c9 can only be 3/6/7 and 6/7, respectively, </span><span class="hidden">the other three cells in c9 must be 1/2/4</span>.
+        
+    <p>This should unlock a flurry of sudoku, but you will not be able to finish this grid yet. You should have 5 of the 7 cells bordering the Hall of Illusions filled, with others being a pair: <span class="hidden">3, 7, 5, 1/4, 1/4, 9, 6</span>. Do not fill it any other cells in the Hall of Illusions yet; you have a sense of forboding about it.
+
+    <p>Go look at the new eyes. Most of them don't appear immediately useful, but one of them deserves a second look.
+
+<h2>Chapter 11b. Quarters (grid 2)</h2>
+
+    <p><span class="hidden">The new eye here restricts r9c1 quite a bit:</span> <span class="hidden">it cannot be greater than 6, so the 7 and 9 must now go in r7c1 and r8c1 (in that order, because of r8c8).</span> <span class="hidden">The whisper line leading into r8c5 forces it to be at least 7, but now it cannot be 7 or 9.</span> This triggers some useful sudoku, most importantly that <span class="hidden">r7c7 = 8</span>. <span class="hidden">The 8 in r9 must be in b7, but it cannot be in r9c2 without limiting the eye to only seeing three cells.</span> And this shows us our fourth boss cell!
+        
+    <p>You've now finally filled the border with the Courtyard, but we still can't finish that grid. Time for the boss.
+
+<h2>Chapter 12. Keymaster (Quarters boss)</h2>
+
+    <p>Be sure to read the rules carefully. The clues outside the grid here are <i>not</i> eyes; they are "numbered room" clues. The digit in the door must go into the <i>n</i>th cell away in the same row or column, where <i>n</i> is the digit in the immediately adjacent cell (its "index cell"). This can be hard to grasp from a description, so it might be more helpful to see a few examples of valid placements according to this rule alone:
+
+    <table class="grid"><tr><td class="sr tan">5</td><td>3</td><td></td><td class="r">5</td><td></td><td></td><td class="r"></td><td></td><td></td><td></td></tr></table><br>
+    <table class="grid"><tr><td class="sr tan">5</td><td>5</td><td></td><td class="r"></td><td></td><td>5</td><td class="r"></td><td></td><td></td><td></td></tr></table><br>
+    <table class="grid"><tr><td class="sr tan">5</td><td>8</td><td></td><td class="r"></td><td></td><td></td><td class="r"></td><td></td><td>5</td><td></td></tr></table>
+
+    <p>The second of these, of course, violates the standard rules of sudoku and so wouldn't be legal in the actual puzzle.
+
+    <p>The rules in the puzzle description aren't completely clear about this, but in numbered room sudoku, "<i>n</i>th" is always a <i>relative</i> index, i.e. the cell <i>n</i> cells away from the clue (as opposed to an absolute index that always starts from the top or left side, like I've been using with "r6" or "c7"). For example, these are legal placements for clues on the right side:
+
+    <table class="grid"><tr><td></td><td></td><td class="r"></td><td></td><td></td><td class="r"></td><td>5</td><td></td><td>3</td><td class="sl tan">5</td></tr></table><br>
+    <table class="grid"><tr><td></td><td></td><td class="r"></td><td></td><td>5</td><td class="r"></td><td></td><td></td><td>5</td><td class="sl tan">5</td></tr></table><br>
+    <table class="grid"><tr><td></td><td>5</td><td class="r"></td><td></td><td></td><td class="r"></td><td></td><td></td><td>8</td><td class="sl tan">5</td></tr></table>
+
+    <p>Again, the second example violates the standard sudoku rules and wouldn't be legal in the actual puzzle.
+
+    <p>There's an interesting property that's generally true for numbered room clues at opposite ends of the same row or column: <span class="hidden">when the index cells sum to 10, the clues end up talking about the same cell. If the digits in the clues are different, this has to be impossible. (If the digits in the clues are the same, this is <i>required</i>, but that doesn't happen in this puzzle.)</span>
+
+    <p>Anyway, the triple clues are the natural places to start. <span class="hidden">The three 2 doors on the top side of the grid are aligned with the box borders.</span> <span class="hidden">This means that, if one of them goes in b8, the other two cannot. There are three clues and three possible boxes, thus one clue per box.</span> <span class="hidden">As such, one of the digits in r1 in b2 is 1/2/3, one is 4/5/6, and one is 7/8/9.</span> <span class="hidden">The index cells for these three clues are also a cage with sum 18, which they can only reach if they contain 3, 6, and 9.</span> <span class="hidden">Accordingly, there must be a 2 in r3 in b2, in r6 in b5, and in r9 in b8.</span> <span class="hidden">Since the 2 in r6 is in b5, r6c9 must be 4/5/6 because of the 2 door.</span>
+
+    <p><span class="hidden">As for the three 5 doors on the left side of the grid, </span><span class="hidden">the same logic applies except that there's a single degree of freedom: it's 3/6/9 except that one of the digits is one less, i.e. 2/5/8. This ends up being very open-ended in terms of marking the grid, and it's not worthwhile; but it'll be important, and you'll need to keep it in mind.</span>
+
+    <p><span class="hidden">Consider the 31 cage.</span> <span class="hidden">The 2 in b5 must be in r6, which puts it in the cage.</span> <span class="hidden">So the other 4 cells in the cage must sum to 29, making them 5/7/8/9.</span> <span class="hidden">You know that the 5 in this box is not in r6c4 because this would make the 17 sum in c1 impossible. It also cannot be in r6c5 because then 5 would also have to be in r6c1. So you know that it must be in c6, and therefore one of the digits in the cage in c1 is 6.</span> <span class="hidden">r9c6 must be 4/5/6 because of the door, but it cannot be 5 by sudoku: the 5 in b5 is already in c6.</span> <span class="hidden">This also means that r5c6 is not 5, and so r5c1 is not 6.</span> <span class="hidden">Finally, since neither possible digit in r9c6 is 2, r1c6 cannot be 9.</span>
+
+    <p><span class="hidden">Can r1c6 be narrowed further?</span> <span class="hidden">If it were 6, r9c6 would have to be 4. This creates that situation I mentioned above: the clue at the top of the column would make r6c6 = 2, but the clue at the bottom would make r6c6 = 5. So this is impossible, and r1c6 = 3.</span> <span class="hidden">Therefore r6c9 must be 5/6.</span> <span class="hidden">This means that r6c1 can no longer be 6, because this would make r6c6 = 5, and r6c9 would be impossible to fill. So r4c1 = 6.</span> <span class="hidden">By putting a 5 in r4c6, this also puts a 6 in r9c6.</span> <span class="hidden">This puts a 6 in c3 in b7, since it cannot go in the 12 cage; and that puts a 6 in the 9 cage in b1, making the sum 1/2/6. (There is also a much more interesting way to prove this directly with the 3 clues.)</span>
+
+    <p>Consider the 15 cage in b8. <span class="hidden">To sum to 15 in four distinct digits without 1 requires 2/3/4/6; but r9c6 is 6, so this is impossible, and there must be a 1 in the cage.</span> <span class="hidden">The 1 in c6 can now only be in r2c6, and the 4 must be in b8. The digits in the 9 cage can be placed by sudoku.</span>
+    
+    <p><span class="hidden">Where is the 3 in c2? The index cell, r1c2, can only be 4/5/7/8.</span> <span class="hidden">One of the index cells in b4 must be either 2 or 3 to make the cage sum work.</span> <span class="hidden">If r1c2 is 4 or 5, the index cells in b4 can no longer be 3, and one of them must be 2. But only r5c1 can be 2, and this would make r5c2 = 5.</span> <span class="hidden">So if r1c2 = 5, there's an immediate contradiction: r5c2 must be both 3 and 5.</span> <span class="hidden">And if r1c2 = 4, r4c2 = 3; but this means the 12 cage in b7 sees all three of 3, 4, and 5, making it impossible to fill.</span> <span class="hidden">So r1c2 must be 7/8, putting the 3 into the 12 cage either way and making it a 3/9 pair.</span>
+
+    <p>Now consider the 15 cage in b6. <span class="hidden">By sudoku, there is no 6 in this cage.</span> <span class="hidden">Again, to sum to 15 in four distinct digits without 1 requires 2/3/4/6; since this is not possible, there must be a 1 in the cage.</span> <span class="hidden">Therefore the only place for a 1 in r6 is r6c3.</span> <span class="hidden">As a result, r6c1 cannot be 3; it must be 8/9, and r5c1 must be 2/3.</span> <span class="hidden">This creates a 2/7/8/9 set in r6.</span> <span class="hidden">The remaining digits are 3/4/5/6; of these, r6c2 can only be 4. The other three must go in b6.</span> <span class="hidden">There is only one way to sum 4 distinct to 15 without 3/5/6: 1/2/4/8. The other two cells in b6 must be a 7/9 pair.</span>
+
+    <p><span class="hidden">What digits remain to be placed in c2?</span> <span class="hidden">The 2 cannot be in r1c2 or r9c2, so it must go in b4.</span> <span class="hidden">This forces r5c1 = 3 and r6c1 = 8, as well as the corresponding 5s.</span> <span class="hidden">There's a lot of sudoku to do now; you should be able to finish b4, as well as b6 outside of the cage.</span>
+
+    <p><span class="hidden">Now we can look at the 3 in r2 again.</span> <span class="hidden">It must be 7/8/9, but it cannot be 7/8 because r2c7 sees both 3 and 9.</span> <span class="hidden">So it must be 9, which sets r2c9 = 3.</span>
+
+    <p><span class="hidden">Consider the digits 3, 6, and 9. They've already been placed, or at least heavily constrained, in most of the boxes, rows, and columns.</span> <span class="hidden">One of the exceptions is c8, about which you seem to know almost nothing.</span> <span class="hidden">3/6/9 cannot be in r1c8 or r2c8, or in b6. This leaves only four cells for three digits.</span> <span class="hidden">At least one of 3/6/9 must be in the 14 cage in b9.</span>
+
+    <p>It's finally time to look at the last door. <span class="hidden">The 8 in r8 cannot go in r8c1 or r8c6 by sudoku.</span> <span class="hidden">It cannot go in the 15 cage in b8 because the cage would have to be 1/2/4/8, and the 4 is known to be in c9 in this box.</span> <span class="hidden">It cannot go in r8c7 because r8c9 would have to be 3.</span> <span class="hidden">It cannot go in r8c9 because r8c9 would also have to be 1.</span> <span class="hidden">If r8c8 = 8, r8c9 = 2, so r9c8 = 4 to make the cage work; but then it becomes impossible to place all of 3/6/9 in c8.</span> <span class="hidden">Therefore r8c3 = 8, making r8c9 = 7.</span>
+    
+    <p>The remainder of the puzzle is straightforward. The digit to place in the boss cell is <span class="hidden">1</span>.
+
+<h2>Chapter 13. Quarters (grid 2)</h2>
+
+    <p>You just learned two rules, one of which is tied to a quest.
+
+    <p>The first rule is CODEX, which you're going to need when you start the Library grid. You won't need this quite yet, but we'll come back to it very soon.
+    
+    <p>The second rule is collectible coins. You also don't need this yet, but you've been seeing these all over, so you might as well read about it now:
+    <ul compact>
+        <li>First, read the main rule description in the puzzle description box. Okay, so if you ever put, say, a 4 in a coin cell, that means there are exactly 4 coin cells in the entire map with a 4.
+        <li>Second, click on the cell with the red exclamation mark beneath the Quarters grid. The puzzle description box will tell you that there's exactly 45 coin cells on the map. That means the map isn't missing any coin digits.
+        <li>Finally, scroll the map to the bottom right corner to find the Quest Progress box. You probably forgot this was there. You'll see that you've solved four bosses and one of the grids on the map, and there's a space to record how many coins you've found for each digit. I would not recommend actually using this; it's extremely easy to lose track of which coins you've already counted, and you'll find yourself recounting them over and over again. A much better way to keep track of this is a document like this, maybe on a piece of paper:
+
+            <table class="worksheet">
+                <tr><th>Grid</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
+                <tr><td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>X</td></tr>
+                <tr><td>2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>X</td><td></td></tr>
+                <tr><td>3</td><td></td><td></td><td>X</td><td></td><td></td><td></td><td></td><td>X</td><td>X</td></tr>
+            </table>
+
+            <p>This is much easier to audit as you go. You only need space for about ten rows, so it's not going to be difficult to manage. I'll tell you now that most of the grids have exactly 3 coins on them, always of different values, and they're never in the border areas. (You don't need to <i>assume</i> that, but the fact that it turns out to be true makes this a really nice way to do the bookkeeping.)
+    </ul>
+
+    <p>Filling the boss cell lets you finish the Quarters grid; this is generally straightforward. <span class="hidden">1 is forced into r6c3, which makes r5c4 = 7.</span> <span class="hidden">The only possible cell for 7 in c6 is r9c6; the whisper line puts a 2 in r8c6.</span> Sudoku will complete the grid except for a few pairs that can be resolved by <span class="hidden">remembering the eye in r9, which can only be satisfied by putting the 4 in r9c1</span>.
+
+    <p>Taking a look around before you move on, it's interesting that you've finished this area with so much fog still uncleared. Perhaps there's something hidden under the fog still. There's also a pair of whisper lines leading off the bottom of the grid that clearly cannot be satisfied by any digit, and a mysterious red line leading off to the right that you're starting to see pop up elsewhere. Very odd. Anyway, off to the library.
+
+<h2>Chapter 14. Library (grid 5)</h2>
+
+    <p>Time to read up about the CODEX rule. This is a column-indexing rule, which may be new to you unless you play a lot of variant sudoku (or even if you do; indexing rules are often different from puzzle to puzzle, as in fact we're seeing right now). Much like the doors from the Keymaster boss you just finished, the idea is that you are placing a fixed digit according to the digit in a specific cell. Unlike that rule, however, the digit you are placing is the column number of a cell with the book emoji in it (&#x1f4d6;), and the digit in that cell is the column number where it goes. Columns are numbered starting from the left side, just like I've been writing with e.g. "c8". It might help to look at some legal placements:
+
+    <table class="grid"><tr><td>4</td><td></td><td class="r"></td><td class="blue">1</td><td></td><td class="r"></td><td></td><td></td><td></td></tr></table><br>
+    <table class="grid"><tr><td></td><td></td><td class="r"></td><td class="blue">7</td><td></td><td class="r"></td><td>4</td><td></td><td></td></tr></table><br>
+    <table class="grid"><tr><td></td><td></td><td class="r"></td><td class="blue">4</td><td></td><td class="r"></td><td></td><td></td><td></td></tr></table>
+
+    <p>Unlike the numbered room rule, where certain digits in the index cell can just never work for certain clues, these clues never restrict cells by themselves: any cell in the row could be a legal place to put the column number of the clue cell. It's only in interaction with other clues, or with digits you've already placed, that the rule comes into its own.
+
+<h2>And a whole lot more...</h2>
 
 <h2>Closing notes</h2>
 
