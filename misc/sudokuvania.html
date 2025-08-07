@@ -49,6 +49,15 @@
         table.grid tr td.blue {
             background-color: cornflowerblue;
         }
+        table.grid tr td.wall {
+            background-color: rebeccapurple;
+        }
+        table.grid tr td.cave {
+            background-color: lightsteelblue;
+        }
+        table.grid tr td.lamp {
+            background-color: gold;
+        }
 
         table.worksheet tr td {
             text-align: center;
@@ -65,11 +74,16 @@
         "use strict";
         function handleClick(e) {
             let target = e.target;
-            if (target === null) return;
-            if (target.className === "hidden") {
-                target.className = "revealed";
-            } else if (target.className === "revealed") {
-                target.className = "hidden";
+            while (target !== null) {
+                let classes = target.classList;
+                if (classes.contains("hidden")) {
+                    classes.remove("hidden");
+                    classes.add("revealed");
+                } else if (classes.contains("revealed")) {
+                    classes.remove("revealed");
+                    classes.add("hidden");
+                }
+                target = target.parentNode;
             }
         }
         function enableClickHandlers() {
@@ -464,11 +478,114 @@
 
     <p>Unlike the numbered room rule, where certain digits in the index cell can just never work for certain clues, these clues never restrict cells by themselves: any cell in the row could be a legal place to put the column number of the clue cell. It's only in interaction with other clues, or with digits you've already placed, that the rule comes into its own.
 
+    <p>Right, so, let's get started. You can see three codex clues. <span class="hidden">They are in c2, so the digit in the clue is the column number of the 2 in that row.</span> <span>Since r6c1 = 2, r6c2 = 1.</span> That reveals more of the grid, but there's something else to notice first. <span class="hidden">Just like you saw with the Keymaster, these clues are aligned within a single row of boxes.</span> <span class="hidden">Since they are placing the 2, they must be placing it in the different boxes.</span> <span class="hidden">The placement in b5 cannot be in c4, and the placement in b6 cannot be in c7, so you've narrowed the 2 down to four cells in each box.</span>
+
+    <p>Now you can check out the clues in b5. <span class="hidden">The arrows use a lot of cells in this box.</span> <span class="hidden">The least that a 5-cell set can sum to is 15.</span> <span class="hidden">The arrows also require a cell outside the box, so their circles must sum even higher than that.</span> <span class="hidden">They must be at least 16, and r5c7 cannot be greater than 2.</span> <span class="hidden">It cannot be 2 because that would require the clue in r5c2 to be 7, so it is 1.</span> <span class="hidden">r4c5 and r4c6 cannot be 2 and still sum to at least 16.</span> <span class="hidden">r5c2 must be 5/6, and r4c2 must be 8/9.</span> <span class="hidden">r4c5 and r4c6 must contain a 9, so r4c2 = 8.</span> <span class="hidden">The arrows sum to 16, so the arrow cells in b5 sum to 15.</span> <span class="hidden">By the codex clues, r4c8 = 2, and the other two cells in this row and box are 5/6.</span> <span class="hidden">You can place the 1/3 in this row by sudoku.</span>
+
+    <p>Both of these arrows have 1s on them. <span class="hidden">The other cells are a 2/3/4/5 set; the 7 must be 1/2/4, so the 9 must be 1/3/5.</span> <span class="hidden">Since the 2 must be in r5, the 4 must be in either r6c5 or r6c6.</span> <span class="hidden">Since these cells are both codex clues, the digit in r6c4 must be 5/6.</span> <span class="hidden">You know that 5 is on the arrows in this box, so it must be 6, and therefore r6c6 = 4.</span> <span class="hidden">This also determines the 7, 9, 2, and 6 in this box.</span> <span class="hidden">Placing the 7 and 9 finishes r4 via the codex clues.</span> <span class="hidden">The remaining codex clues here are 3/5, but r5c6 = 5 would force r5c5 = 6 when we already know it is 2.</span> <span class="hidden">The 2 in r5 is in r5c5, so r5c2 = 5.</span>
+
+    <p>The puzzle suggests looking at these new cells in b8, and so do I. <span class="hidden">Again, you have two codex cells in the same column and the same row of boxes, so they must be cells in different boxes.</span> <span class="hidden">They also have the same high/low polarity because of the whisper line.</span> <span class="hidden">If they were 1/2/3/4, one of them would have to be a 4 or else they'd be in the same box, but r6c6 = 4 already. Therefore they are 6/7/8/9, and one of them must be a 6.</span> <span class="hidden">r8c7 cannot be 1, so r9c6 cannot be 6; r8c6 = 6 (indexing itself, which is fine), and r9c5 = 1.</span> <span class="hidden">r9c1 means that the only remaining value for r9c6 is 7, which sets r8c7 = 2.</span> <span class="hidden">And r9c7 = 6 aaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhh</span>
+
+<h2>Chapter 14b. Maintenance (grid 6)</h2>
+
+    <p>Well, dust yourself off. You're in a new grid, but there's also a new rule. Go ahead and read about it in the puzzle description box. <span class="hidden">Every cell has a digit &mdash; that must mean outside of grids, too.</span> <span class="hidden">There are cells you can't see, but surely the line can't have two different endpoints in the same cell. So this line between the library and the maintenance must be continuous, and you can see both ends of it. Go ahead and fill it in as best you can.</span> <span class="hidden">You should have everything except a pair of cells, the third from each end.</span> <span class="hidden">And you have one cell in the maintenance grid, it's a 6, and it's next to a black dot. r9c8 = 3.</span> <span class="hidden">r9c7 is 8/9, but it's also on a black dot, so it must be 8.</span> <span class="hidden">r9c6 = 4 (by the dot).</span> <span class="hidden">r9c5 = 9 (by the whisper).</span> <span class="hidden">Uh oh.</span>
+
+<h2>Chapter 15. Prism Break (Maintenance boss)</h2>
+
+    <p>This is a really fun and unique puzzle.
+        
+    <p>The first rule to learn here is the shading. You're going to have to shade the entire grid, making every cell either a cave or a wall. The cave cells all have to have some orthogonal path to each other. (Orthogonal means passing through the edges between adjacent cells, not through diagonals.) They form one unified group. The wall cells all have to have some orthogonal path to one (or more) of the edges of the grid, but they can be in multiple groups. So this would be a valid shading of a grid:
+
+    <table class="grid">
+        <tr><td class="wall"></td><td class="cave"></td><td class="cave"></td><td class="cave"></td><td class="wall"></td><td class="wall"></td><td class="cave"></td></tr>
+        <tr><td class="wall"></td><td class="wall"></td><td class="cave"></td><td class="cave"></td><td class="wall"></td><td class="cave"></td><td class="cave"></td></tr>
+        <tr><td class="cave"></td><td class="wall"></td><td class="cave"></td><td class="cave"></td><td class="wall"></td><td class="wall"></td><td class="cave"></td></tr>
+        <tr><td class="cave"></td><td class="cave"></td><td class="cave"></td><td class="wall"></td><td class="wall"></td><td class="cave"></td><td class="cave"></td></tr>
+        <tr><td class="wall"></td><td class="cave"></td><td class="cave"></td><td class="cave"></td><td class="wall"></td><td class="cave"></td><td class="wall"></td></tr>
+        <tr><td class="cave"></td><td class="cave"></td><td class="wall"></td><td class="cave"></td><td class="cave"></td><td class="cave"></td><td class="cave"></td></tr>
+        <tr><td class="cave"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="cave"></td></tr>
+    </table>
+
+    <p>Rules like this, with different shadings of orthogonally-connected cells, come with an extremely handy little theorem about every 2x2 portion of the grid:
+
+    <table class="grid">
+        <tr><td class="wall"></td><td class="cave"></td></tr>
+        <tr><td class="cave"></td><td class="wall"></td></tr>
+    </table>
+
+    <p><span class="hidden">They can never have a checkerboard pattern like this. There must be an orthogonal path between the diagonally-opposite cave cells, but the wall cells must themselves be orthogonally connected to the edges of the grid, which the cave path cannot possibly get around. So if you ever see two cells of the same color across a diagonal from each other, you know at least one of the adjacent has the same color, too.</span>
+
+    <p>I suggest using dark grey for wall cells and light grey for cave cells, because I think it looks nice on this puzzle. You might reasonably decide that the contrast isn't good enough, though, especially between the light-grey-and-pink and the default pink background.
+
+    <p>The second rule is the akari rule. (This comes from a completely different kind of logic puzzle called <a href="https://en.wikipedia.org/wiki/Light_Up_(puzzle)">"light up" or <i>akari</i></a>.) Lanterns always go in cave cells, and they illuminate other cave cells in all four orthogonal directions until they meet a wall. No two lanterns can ever see each other. I suggest coloring lantern cells yellow rather than trying to mark them in some other way; as long as the cave and lantern cells are both light colors and the walls are a dark color, you probably won't have trouble remembering that lantern cells are also cave cells. So this would be a valid placement of lanterns in the grid above:
+
+    <table class="grid">
+        <tr><td class="wall"></td><td class="lamp"></td><td class="cave"></td><td class="cave"></td><td class="wall"></td><td class="wall"></td><td class="cave"></td></tr>
+        <tr><td class="wall"></td><td class="wall"></td><td class="cave"></td><td class="lamp"></td><td class="wall"></td><td class="lamp"></td><td class="cave"></td></tr>
+        <tr><td class="lamp"></td><td class="wall"></td><td class="cave"></td><td class="cave"></td><td class="wall"></td><td class="wall"></td><td class="cave"></td></tr>
+        <tr><td class="cave"></td><td class="lamp"></td><td class="cave"></td><td class="wall"></td><td class="wall"></td><td class="cave"></td><td class="lamp"></td></tr>
+        <tr><td class="wall"></td><td class="cave"></td><td class="lamp"></td><td class="cave"></td><td class="wall"></td><td class="lamp"></td><td class="wall"></td></tr>
+        <tr><td class="cave"></td><td class="cave"></td><td class="wall"></td><td class="cave"></td><td class="lamp"></td><td class="cave"></td><td class="cave"></td></tr>
+        <tr><td class="lamp"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="lamp"></td></tr>
+    </table>
+
+    <p>Note that it's fine if two different lanterns see the same cell; it's only a problem if they see each other.
+
+    <p>The third rule is that the digit in a lantern cell is how many cells it illuminates, including itself. With the placements above, the digits would have to be:
+
+    <table class="grid">
+        <tr><td class="wall"></td><td class="lamp">3</td><td class="cave"></td><td class="cave"></td><td class="wall"></td><td class="wall"></td><td class="cave"></td></tr>
+        <tr><td class="wall"></td><td class="wall"></td><td class="cave"></td><td class="lamp">4</td><td class="wall"></td><td class="lamp">2</td><td class="cave"></td></tr>
+        <tr><td class="lamp">2</td><td class="wall"></td><td class="cave"></td><td class="cave"></td><td class="wall"></td><td class="wall"></td><td class="cave"></td></tr>
+        <tr><td class="cave"></td><td class="lamp">5</td><td class="cave"></td><td class="wall"></td><td class="wall"></td><td class="cave"></td><td class="lamp">5</td></tr>
+        <tr><td class="wall"></td><td class="cave"></td><td class="lamp">7</td><td class="cave"></td><td class="wall"></td><td class="lamp">3</td><td class="wall"></td></tr>
+        <tr><td class="cave"></td><td class="cave"></td><td class="wall"></td><td class="cave"></td><td class="lamp">4</td><td class="cave"></td><td class="cave"></td></tr>
+        <tr><td class="lamp">2</td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="lamp">2</td></tr>
+    </table>
+
+    <p>So that would not, in fact, be a legal lantern placement under the rules of sudoku.
+
+    <p>The final rule is the cages. Cages in this puzzle are always in wall cells, and the digit in a cage is the number of lanterns in the orthogonally adjacent cells. So if there were a cage in r5c5 in my little example, it would have to be filled with 2.
+
+    <p>Start by shading all of the cages as walls. Remember that all of these will have to connected to an edge of the puzzle. <span class="hidden">This means the digit in a cage can never be 4, because a lantern cell is always a cave cell, and a wall completely surrounded by cave cannot be connected to an edge. But of course it's fine for a cage that's sitting directly on an edge to be surrounded on all its other sides.</span>
+
+    <p><span class="hidden">The key to breaking into this puzzle is placing lantern cells, which give you a lot of information.</span> <span class="hidden">The lantern cells that share a row or column are particularly constrained.</span> <span class="hidden">You have to place 6 lanterns around the cages in r9, in a total of 8 total cells.</span> <span class="hidden">The gaps between these lanterns are only two cells, and you can never place two lanterns in the same gap because they would illuminate each other.</span> <span class="hidden">So these two gaps must each contain a cell that does not contain a lantern.</span> <span class="hidden">Since there are 6 lanterns to place, the 4 cells that are not in the gaps must be lanterns, and the two gaps <i>must</i> contain a lantern.</span>
+
+    <p>Recall that each lantern contains the number of cells that it illuminates. <span class="hidden">If r3c9 were a lantern, it could illuminate no more than 3 cells, but 1/2/3 are impossible by sudoku.</span> <span class="hidden">Therefore r4c9 cannot be 3, and the 3 must be r7c9.</span> <span class="hidden">This puts a lantern into r6c9, which means r5c9 cannot have one, so r4c9 = 1 and r1c9 = 2.</span> Be sure you don't try to mark cells that don't have lanterns specifically as cave or wall cells! You don't necessarily know that; all you know is that it isn't a lantern. I found that I could get by without marking non-lantern deductions, but you might consider finding another way to mark them if you want.
+
+    <p>There's another place that's restricted in its illumination. <span class="hidden">r8c9 has a lantern, and it can illuminate at most four cells, but it cannot be 1/2/3 by sudoku. Therefore it is 4.</span> Mark the cells it illuminates as cave. <span class="hidden">r8c6 cannot be 3 anymore.</span> <span class="hidden">It must be adjacent to at least one lantern, though.</span> <span class="hidden">If r8c5 = 3, both of r8c6's remaining adjacent cells would be adjacent to lanterns.</span> <span class="hidden">Therefore r8c1 = 3.</span>
+
+    <p>Don't forget the theorem I explained above. <span class="hidden">r2c8, r6c8, r7c2, and r9c2 all must be cave cells because they would make the cave disconnected if they were walls. They cannot be lanterns, so you can mark them as ordinary cave.</span> <span class="hidden">This brings the lanterns in c8 perilously close to illuminating one another; r3c8 and r5c8 must be walls.</span> <span class="hidden">Therefore r3c9 and r5c9 must also be walls by the checkerboard theorem.</span> <span class="hidden">This makes r4c6 a cave cell.</span>
+
+    <p>These new cave cells make illumination tricky again. <span class="hidden">You now have two lanterns in c9 that must have a digit of at least 5 but only illuminate in one direction.</span> <span class="hidden">The digit in r3c7 can only be 1 now: it is surrounded by ordinary cave on two sides and a wall on a third. r3c6 is a lantern.</span> <span class="hidden">r4c6 is ordinary cave.</span>
+
+    <p>You haven't done much with the lanterns in c8 yet. <span class="hidden">r1c8 cannot be 2, so it must illuminate at least one cell to its left; that's all you can do with this for now.</span> <span class="hidden">r7c8 cannot be 3/4, so it must also illuminate at least one cell to its left.</span> <span class="hidden">That means r7c6 cannot be a lantern.</span> <span class="hidden">r8c6 = 1 and r8c5 = 2. r9c6, r7c5, and r8c4 are lanterns.</span> <span class="hidden">r7c6 and r8c3 must be walls to prevent lanterns from illuminating each other.</span> <span class="hidden">r7c4 must be a cave by the checkerboard theorem, so r7c3 must also be a wall.</span> <span class="hidden">r9c5 must be a wall or the cages will not be connected to an edge.</span> <span class="hidden">The illumination of r7c8 now cannot be more than 5, so it is 5.</span>
+    
+    <p>You just added a bunch of new lanterns. <span class="hidden">The lantern in r9c6 must be at least 3 by sudoku, so it must illuminate at least r9c7 and r9c8, but that means it also illuminates r9c9; it is 4.</span> <span class="hidden">r7c5 must be at least six, so r5c5, r4c4, and r3c5 must be cave. You already know that r2c5 is cave, so r7c5 is 8/9.</span> <span class="hidden">Making r4c5 cave means that r4c8 is at least 4, but it cannot be 5 by sudoku, and it cannot be more than 5 because of the wall in r4c3. So it is 4 and r4c4 is a wall.</span> <span class="hidden">r8c4 must be at least 5 by sudoku, but it can only possibly illuminate 5 cells now, so it is five and all of those cells are cave.</span>
+        
+    <p>Time to look at the left side of the puzzle for a chanege. <span class="hidden">If r9c3 were cave, r9c1 would illuminate 4, which breaks sudoku; therefore r9c3 is wall and r9c1 = 2.</span> <span class="hidden">r8c2 must be at least 6, so you can shade cave up to at least r3c2.</span> <span class="hidden">This means r4c3 can no longer be 3, so it is 2, with lanterns above and below.</span> <span class="hidden">The only remaining paths that can connect r4c3 to an edge of the puzzle require r3c4 and r2c4 to be walls.</span> <span class="hidden">This forces r2c9 = 5.</span>
+        
+    <p><span class="hidden">How constrained is c1 now?</span> <span class="hidden">r7c1 must be at least 4, so r6c1 and r5c1 must be cave.</span> <span class="hidden">If r2c1 were a lantern, it would have to be at least 4 by sudoku, but there would also need to be a wall between it and r7c1.</span> <span class="hidden">The most it could be is 4, but then it would make r7c1 = 4, which would break sudoku. So the lantern is in r1c2.</span>
+    
+    <p>That creates interesting constraints in r1. <span class="hidden">r3c2 must be cave by the checkerboard theorem, so r2c2 must be wall to prevent the lanterns from illuminating each other.</span> <span class="hidden">r1c2's illumination must therefore run strictly to the right, and it must be at least 3.</span> <span class="hidden">So the only way of connecting the wall in r2c4 to an edge of the puzzle is if r2c3 and r2c1 are also wall.</span> <span class="hidden">That means r1c5 must be cave, or else that stretch of cave will be disconnected. r1c6 must then be wall to separate the lanterns.</span> <span class="hidden">r1c2 = 4. r1c8 = 3.</span>
+    
+    <p>You're very close to finishing the shading. <span class="hidden">r3c1 must be cave so that r3c3 can illuminate more than 2; r3c3 = 3.</span> <span class="hidden">r3c6 must be at least 6, which is the most it can be; r5c6 is cave.</span> <span class="hidden">r7c5 is now known to be 8. r8c2 = 7.</span> <span class="hidden">If r5c3 = 8, r6c9 is also forced to be 9, and there is no remaining digit that can be placed in r5c9.</span> This still doesn't finish the shading, but the rest of the grid can be solved with sudoku, and you'll shade the last cells along the way.
+
+    <p>The digit for the boss cell is <span class="hidden">5</span>.
+
+<h2>Chapter 16. Maintenance (grid 6)</h2>
+
+<h2>Chapter 17. Library (grid 5)</h2>
+
+    (TODO)
+
+    <p><span class="hidden">What other clues affect this grid?</span> <span class="hidden">A 2 eye is very constrained: it must only be able to see the first cell and the 9.</span> <span class="hidden">The 9 must be in r5c3 or r6c3, and the 8 must be in b1, so the 8 is definitely visible. Therefore it must be in r1c3.</span>
+
 <h2>And a whole lot more...</h2>
 
 <h2>Closing notes</h2>
 
     <p>My thanks to Skeptical Mario for a wonderful puzzle hunt, to <a href="https://svencodes.com/">Sven Neumann</a> for SudokuPad, and to the folks at <a href="https://crackingthecryptic.com/">Cracking the Cryptic</a> for introducing me to a world of puzzles beyond dreary machine-generated killer sudokus.
 
-    <p><i>Sudokuvania: Digits of Despair guide v0.2, written by <a href="mailto:rjmccall@gmail.com">John McCall</a>, July–August 2025.</i></p>
+    <p><i>Sudokuvania: Digits of Despair guide v0.3, written by <a href="mailto:rjmccall@gmail.com">John McCall</a>, July&ndash;August 2025.</i></p>
 </body>
