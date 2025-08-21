@@ -58,6 +58,9 @@
         table.grid tr td.lamp {
             background-color: gold;
         }
+        table.grid tr td.snake {
+            background-color: goldenrod;
+        }
 
         table.worksheet tr td {
             text-align: center;
@@ -165,7 +168,7 @@
     <p>Sudokuvania: Digits of Despair uses the SudokuPad web-based solving software. Because Sudokuvania makes heavy use of fog mechanics, it is not possible to complete the "world map" as intended without using this software. As of the time of this writing (mid-July 2025), SudokuPad's support for puzzles the size of Sudokuvania continues to be more than a little janky. Please take the following advice (some of which is repeated in the game rules):</p>
 
     <ul compact>
-        <li>You must turn on Experimental > Test Large Puzzle UI in order to be able to zoom and scroll the world map, which is required unless you're solving on a truly enormous screen or have very good eyesight. The current experimental UI requires a mouse or similar input mechanism and does not support mobile devices, so you can only really work on the world map on a laptop or desktop computer. Boss puzzles are ordinary 9x9 grids and can be solved on any device.</li>
+        <li>You must turn on Experimental > Test Large Puzzle UI in order to be able to zoom and scroll the world map, which is required unless you're solving on a truly enormous screen or have very good eyesight. The current experimental UI requires a mouse or similar input mechanism and does not support mobile devices, so you can only really work on the world map on a laptop or desktop computer. Boss puzzles are ordinary 9&times;9 grids and can be solved on any device.</li>
         <li>You can zoom in and out of the world map using a mouse scroll wheel. On a MacBook, you can use a two-finger drag, but it doesn't work very well. The zoom mechanics can be somewhat unintuitive and frustrating, especially when zooming in or out near the edge of the map.</li>
         <li>You can scroll around the world map by dragging with the right mouse button. I do not believe there is an equivalent touchpad gesture.</li>
         <li>If you find yourself stuck or lost, you can always reset the current view of the world map by toggling Test Large Puzzle UI off. You'll need to toggle it back on before you can zoom or scroll again. This does not reset your solution at all.</li>
@@ -205,7 +208,7 @@
             <li>cY means column Y of the current grid, with c1 being the left-most column.</li>
             <li>rXcY means the cell in row X and column Y.</li>
             <li>rXcY = D means the digit in rXcY is D.</li>
-            <li>bN means box N of the current grid, counting left-to-right, top-to-bottom. In a standard 9x9 sudoku grid, b1 is the top left box and b6 is the central box on the right side.</li>
+            <li>bN means box N of the current grid, counting left-to-right, top-to-bottom. In a standard 9&times;9 sudoku grid, b1 is the top left box and b6 is the central box on the right side.</li>
             <li>X/Y/Z means "X, Y, or Z".</li>
             <li>"Sudoku" means the ordinary rules of sudoku. If I say that you should do sudoku, I mean that you can make some progress by just applying those rules for a bit, with the implication that it's not too tricky or else I'd be giving you more hints.</li>
             <li>A cell "sees" another cell if the rules of the puzzle would force them to have different digits, whether that's from the row/column/box restrictions of ordinary sudoku or from some other rule.</li>
@@ -217,6 +220,7 @@
                 r1c3 here is more constrained than 1/2/3 (it must be 1/3), but that's fine. If another cell saw all three of these cells, it would not be able to contain 1/2/3, because no matter how the digits were filled in, it would see each of them.
             </li>
             <li>A "pair" is just a set of two digits. The unfilled cells in r2 of the example above form a 1/3 pair.</li>
+            <li>A "naked single" is a cell that only has one remaining possible digit.</li>
         </ul>
 
 <h2>Chapter 1. Front Gate (grid 0)</h2>
@@ -282,13 +286,13 @@
 
     <p>Go ahead and read the description of the new area in the puzzle description. Because these two grids are offset by one cell vertically, the box lines can be a little tricky at first. <span class="hidden">There's a 1 in r3c1 which can see all three cells on this arrow, so its sum must be 9, and the circle must be in r2c4.</span> <span class="hidden">r2c5, the circle that was just revealed, cannot be greater than 5 because of the thermometer.</span> <span class="hidden">It has at least two cells on it, neither of which can be 1, so it must also be at least 5. You can fill in all the thermometer cells you can see.</span> <span class="hidden">The thermometer continues into r3c6, but this cell sees a 1, a 2, and a 3; it must be 4.</span> You should take a moment to fill in what you can, but you're locked out of the rest of this grid for now.
 
-<h2>Chapter 5b. Factory (grid 3)</h2>
+<h2>Chapter 6. Factory (grid 3)</h2>
         
     <p>If you filled in the possibilities right, you should be able to fill the other overlapping cell between these grids. And now you've unlocked WHISPER dash! Take the opportunity to read the grid description as well as the description of the new rule. This is the common "German whisper line" rule from variant sudoku. There are two general insights you should be able to figure out immediately about these lines: <span class="hidden">the digits on the line are never 5</span> and <span class="hidden">they alternate polarities between "high" (greater than 5) and "low" (less than 5).</span> Note that the clue in this grid doesn't actually tell us anything we don't know, because the thermometer already makes r8c2 at least 6!
 
     <p>There is some interesting logic you can do here to fill a few cells, but you won't make much headway beyond that. For now, you need to notice that a couple of whispers were also revealed back in the previous grid.
 
-<h2>Chapter 5c. Quarters (grid 2)</h2>
+<h2>Chapter 7. Quarters (grid 2)</h2>
 
     <p>The new clues here are quite constrained. <span class="hidden">Both r4c7 and r4c9 cannot be greater than 3.</span> <span class="hidden">They also both see the 2 in r4c1, so you should be able to fill them in.</span> <span class="hidden">The newly-revealed line must have at least one digit less than 5 on it, but both cells see 1, 2, and 3, so it must be a 4/9 pair, which can be placed.</span>
 
@@ -298,13 +302,13 @@
 
     <p>You can do a little more in this grid before you run off to take advantage of the new rule. <span class="hidden">The 2 and 3 in r6 can only be in b5, which </span><span class="hidden">forces r6c7 = 9.</span> <span class="hidden">The 1 and 6 can only be in r6c2 and r5c3,</span><span class="hidden"> so r6c1 must be 4/5</span>. That seems to be it, though; about half the grid is still wide open. Back to the factory.
 
-<h2>Chapter 6. Factory (grid 3)</h2>
+<h2>Chapter 8. Factory (grid 3)</h2>
 
     <p>Well, now that we have a knight's move restriction in this grid (and only in this grid), we can make some real progress. Consider the arrow. <span class="hidden">It cannot have a 1, and it cannot be a 2/3 pair because of r9c3, so it must sum to at least 6.</span> <span class="hidden">But its digit is constrained in b7: it cannot be on its own arrow, so it must be 6/7.</span> <span class="hidden">If r8c1 were 7, r6c1 would be forced to be 6, but r9c3 would also be forced to be 2, and it would be impossible to fill the arrow.</span> <span class="hidden">If r8c2 were 6, r9c3 would be forced to be 2 again, and either possibility for r6c1 leads to a contradiction.</span>  <span class="hidden">r6c1 is interesting.</span> <span class="hidden">The arrow cannot have a 1, and it cannot be a 2/3 pair because of r9c3, so it must sum to at least 6.</span> <span class="hidden">But its digit is constrained in b7: it cannot be on its own arrow, and it cannot be in r8c2 by the knight restriction, so it must be in one of the other three cells. And those cells are filled with 1, 2/3, and 5/6. So it must be 6.</span> You should be able to finish the thermometer and b7.
     
     <p>You can now see a relatively long thermometer in b5. <span class="hidden">r6c4 has at least two digits both less and greater than it, and it cannot be 4, 5, or 6, so it must be 3 or 7.</span> <span class="hidden">If it were 3, one of the ends of the thermometer would have to be 321, but both of the cells that a 2 could be in are a knight's move from r7c3. So it is 7.</span> <span class="hidden">That means one of the ends must be 789. If the 9 were in r6c6, there would be nowhere to place 9 in b8.</span> <span class="hidden">r6c5 must be less than 7 by the thermometer, but it cannot be 6 or 5, so it is 2/3/4.</span> <span class="hidden">The 3 in b8 must be in c6, so it must be in c5 in b5.</span> <span class="hidden">r5c3 must be low, but it cannot be 2 or 4, and it cannot be 3 because it would see all three possible positions of 3 in b5. Therefore it is 1.</span> <span class="hidden">r7c4 is now a naked single 6.</span> <span class="hidden">The only possible place for 1 in b8 is r8c5.</span> <span class="hidden">This forces 1 in b5 into r4c6.</span> And now we've found our second boss cell!
 
-<h2>Chapter 7. Disassembly Line (factory boss)</h2>
+<h2>Chapter 9. Disassembly Line (factory boss)</h2>
 
     <p>This is a very clever exercise in both of those general insights about German whisper lines.
         
@@ -324,7 +328,7 @@
 
     <p>You should be able to finish the puzzle from here. The digit to place back in the boss cell is <span class="hidden">8</span>.
 
-<h2>Chapter 8. Factory (grid 3)</h2>
+<h2>Chapter 10. Factory (grid 3)</h2>
 
     <p>You've revealed the rest of the factory, and you've unlocked a new rule: DOUBLE jump. Go ahead and read about the new rule. If you're used to variant sudoku, this is just a standard Kropki black dot, making one digit the double of the other. This means the lower digit must be 1, 2, 3, or 4, and the higher must be 2, 4, 6, or 8; so a digit adjacent to a dot can never be 5, 7, or 9.
 
@@ -336,13 +340,13 @@
 
     <p>Hmm. You can see some book clues (&#x1f4d6;) in the new grid, but you don't know what they mean. You must be missing something somewhere else.
 
-<h2>Chapter 8b. Front Gate (grid 0)</h2>
+<h2>Chapter 11. Front Gate (grid 0)</h2>
 
     <p>Did you forget that there was a bit of green line here? You know what that means now. Go ahead and place a <span class="hidden">1 in r2c1</span>, and a little sudoku from there will reveal the rest of the grid.
 
     <p>That black dot is interesting. <span class="hidden">You know that the left cell must be 4/6 and the right cell must be 1/2/3.</span> <span class="hidden">So it must be a 2/4 or 3/6 pair. But if it's a 2/4 pair, it'll be impossible to place a digit in r2c2.</span> That should let you finish the front gate at last.
 
-<h2>Chapter 9. Battlements (grid 4)</h2>
+<h2>Chapter 12. Battlements (grid 4)</h2>
 
     <p>Take a moment to read the description of the new grid. It might not look like you can do much here, but <span class="hidden">that black dot is more constrained that it might seem.</span> <span class="hidden">It cannot be a 1/2 or 3/6 pair, so it must be 2/4 or 4/8. Both have a 4, and the 4 cannot be in b7.</span>
 
@@ -360,7 +364,7 @@
 
     <p>The eye in c7 <span class="hidden">can see the 8 in r6c7 and the 9 beneath it. There are only five cells above the 8, and it must see exactly four of them.</span> <span class="hidden">But you've already placed two digits from 5/6/7 in b6, which means one of r4c7 or r5c7 must be less than 4.</span> <span class="hidden">So the other three cells must be visible, which means the first two cells must be 1 and 2 in that order.</span> A short amount of sudoku later, and you'll find the third boss cell.
 
-<h2>Chapter 10. Skysitter (Battlements boss)</h2>
+<h2>Chapter 13. Skysitter (Battlements boss)</h2>
 
     <p>This puzzle is quite fun. There are quite a few clues here, and it can be a little intimidating to break in. The opposing eyes are an important constraint, since the numbers are very small. The arrows are also a powerful restriction; and of course there are also some black dots.
 
@@ -384,7 +388,7 @@
 
     <p>The rest of the puzzle can be solved with ordinary sudoku logic. The digit to place in the boss cell is <span class="hidden">2</span>.
 
-<h2>Chapter 11. Battlements (grid 4)</h2>
+<h2>Chapter 14. Battlements (grid 4)</h2>
 
     <p>Placing the 2 reveals a number of new eyes throughout the world map. You're not quite done with this grid yet, though. The boss digit exposes a number of opportunities for sudoku: <span class="hidden">one line of reasoning leads to r2c4 = 1</span>, <span class="hidden">there is only one possible cell for 6 in b8</span>, and <span class="hidden">there is only one possible cell for 8 in b9</span>. And there's one that's <i>very</i> easy to miss: <span class="hidden">r1c1 = 4 in the factory actually sees r7c9 in this grid! That puts the 4 in r7 in r7c8</span>. As a result, <span class="hidden">r7c9 can only be 3/6, and since </span><span class="hidden">r1c9 and r2c9 can only be 3/6/7 and 6/7, respectively, </span><span class="hidden">the other three cells in c9 must be 1/2/4</span>.
         
@@ -392,13 +396,13 @@
 
     <p>Go look at the new eyes. Most of them don't appear immediately useful, but one of them deserves a second look.
 
-<h2>Chapter 11b. Quarters (grid 2)</h2>
+<h2>Chapter 15. Quarters (grid 2)</h2>
 
     <p><span class="hidden">The new eye here restricts r9c1 quite a bit:</span> <span class="hidden">it cannot be greater than 6, so the 7 and 9 must now go in r7c1 and r8c1 (in that order, because of r8c8).</span> <span class="hidden">The whisper line leading into r8c5 forces it to be at least 7, but now it cannot be 7 or 9.</span> This triggers some useful sudoku, most importantly that <span class="hidden">r7c7 = 8</span>. <span class="hidden">The 8 in r9 must be in b7, but it cannot be in r9c2 without limiting the eye to only seeing three cells.</span> And this shows us our fourth boss cell!
         
     <p>You've now finally filled the border with the Courtyard, but we still can't finish that grid. Time for the boss.
 
-<h2>Chapter 12. Keymaster (Quarters boss)</h2>
+<h2>Chapter 16. Keymaster (Quarters boss)</h2>
 
     <p>Be sure to read the rules carefully. The clues outside the grid here are <i>not</i> eyes; they are "numbered room" clues. The digit in the door must go into the <i>n</i>th cell away in the same row or column, where <i>n</i> is the digit in the immediately adjacent cell (its "index cell"). This can be hard to grasp from a description, so it might be more helpful to see a few examples of valid placements according to this rule alone:
 
@@ -442,7 +446,7 @@
     
     <p>The remainder of the puzzle is straightforward. The digit to place in the boss cell is <span class="hidden">1</span>.
 
-<h2>Chapter 13. Quarters (grid 2)</h2>
+<h2>Chapter 17. Quarters (grid 2)</h2>
 
     <p>You just learned two rules, one of which is tied to a quest.
 
@@ -468,7 +472,7 @@
 
     <p>Taking a look around before you move on, it's interesting that you've finished this area with so much fog still uncleared. Perhaps there's something hidden under the fog still. There's also a pair of whisper lines leading off the bottom of the grid that clearly cannot be satisfied by any digit, and a mysterious red line leading off to the right that you're starting to see pop up elsewhere. Very odd. Anyway, off to the library.
 
-<h2>Chapter 14. Library (grid 5)</h2>
+<h2>Chapter 18. Library (grid 5)</h2>
 
     <p>Time to read up about the CODEX rule. This is a column-indexing rule, which may be new to you unless you play a lot of variant sudoku (or even if you do; indexing rules are often different from puzzle to puzzle, as in fact we're seeing right now). Much like the doors from the Keymaster boss you just finished, the idea is that you are placing a fixed digit according to the digit in a specific cell. Unlike that rule, however, the digit you are placing is the column number of a cell with the book emoji in it (&#x1f4d6;), and the digit in that cell is the column number where it goes. Columns are numbered starting from the left side, just like I've been writing with e.g. "c8". It might help to look at some legal placements:
 
@@ -482,15 +486,15 @@
 
     <p>Now you can check out the clues in b5. <span class="hidden">The arrows use a lot of cells in this box.</span> <span class="hidden">The least that a 5-cell set can sum to is 15.</span> <span class="hidden">The arrows also require a cell outside the box, so their circles must sum even higher than that.</span> <span class="hidden">They must be at least 16, and r5c7 cannot be greater than 2.</span> <span class="hidden">It cannot be 2 because that would require the clue in r5c2 to be 7, so it is 1.</span> <span class="hidden">r4c5 and r4c6 cannot be 2 and still sum to at least 16.</span> <span class="hidden">r5c2 must be 5/6, and r4c2 must be 8/9.</span> <span class="hidden">r4c5 and r4c6 must contain a 9, so r4c2 = 8.</span> <span class="hidden">The arrows sum to 16, so the arrow cells in b5 sum to 15.</span> <span class="hidden">By the codex clues, r4c8 = 2, and the other two cells in this row and box are 5/6.</span> <span class="hidden">You can place the 1/3 in this row by sudoku.</span>
 
-    <p>Both of these arrows have 1s on them. <span class="hidden">The other cells are a 2/3/4/5 set; the 7 must be 1/2/4, so the 9 must be 1/3/5.</span> <span class="hidden">Since the 2 must be in r5, the 4 must be in either r6c5 or r6c6.</span> <span class="hidden">Since these cells are both codex clues, the digit in r6c4 must be 5/6.</span> <span class="hidden">You know that 5 is on the arrows in this box, so it must be 6, and therefore r6c6 = 4.</span> <span class="hidden">This also determines the 7, 9, 2, and 6 in this box.</span> <span class="hidden">Placing the 7 and 9 finishes r4 via the codex clues.</span> <span class="hidden">The remaining codex clues here are 3/5, but r5c6 = 5 would force r5c5 = 6 when we already know it is 2.</span> <span class="hidden">The 2 in r5 is in r5c5, so r5c2 = 5.</span>
+    <p>Both of these arrows have 1s on them. <span class="hidden">The other cells are a 2/3/4/5 set; the 7-sum arrow must be 1/2/4, so the 9-sum arrow must be 1/3/5.</span> <span class="hidden">Since the 2 must be in r5, the 4 must be in either r6c5 or r6c6.</span> <span class="hidden">Since these cells are both codex clues, the digit in r6c4 must be 5/6.</span> <span class="hidden">You know that 5 is on the arrows in this box, so it must be 6, and therefore r6c6 = 4.</span> <span class="hidden">This also determines the 7, 9, 2, and 6 in this box.</span> <span class="hidden">Placing the 7 and 9 finishes r4 via the codex clues.</span> <span class="hidden">The remaining codex clues here are 3/5, but r5c6 = 5 would force r5c5 = 6 when we already know it is 2.</span> <span class="hidden">The 2 in r5 is in r5c5, so r5c2 = 5.</span>
 
     <p>The puzzle suggests looking at these new cells in b8, and so do I. <span class="hidden">Again, you have two codex cells in the same column and the same row of boxes, so they must be cells in different boxes.</span> <span class="hidden">They also have the same high/low polarity because of the whisper line.</span> <span class="hidden">If they were 1/2/3/4, one of them would have to be a 4 or else they'd be in the same box, but r6c6 = 4 already. Therefore they are 6/7/8/9, and one of them must be a 6.</span> <span class="hidden">r8c7 cannot be 1, so r9c6 cannot be 6; r8c6 = 6 (indexing itself, which is fine), and r9c5 = 1.</span> <span class="hidden">r9c1 means that the only remaining value for r9c6 is 7, which sets r8c7 = 2.</span> <span class="hidden">And r9c7 = 6 aaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhh</span>
 
-<h2>Chapter 14b. Maintenance (grid 6)</h2>
+<h2>Chapter 19. Maintenance (grid 6)</h2>
 
     <p>Well, dust yourself off. You're in a new grid, but there's also a new rule. Go ahead and read about it in the puzzle description box. <span class="hidden">Every cell has a digit &mdash; that must mean outside of grids, too.</span> <span class="hidden">There are cells you can't see, but surely the line can't have two different endpoints in the same cell. So this line between the library and the maintenance must be continuous, and you can see both ends of it. Go ahead and fill it in as best you can.</span> <span class="hidden">You should have everything except a pair of cells, the third from each end.</span> <span class="hidden">And you have one cell in the maintenance grid, it's a 6, and it's next to a black dot. r9c8 = 3.</span> <span class="hidden">r9c7 is 8/9, but it's also on a black dot, so it must be 8.</span> <span class="hidden">r9c6 = 4 (by the dot).</span> <span class="hidden">r9c5 = 9 (by the whisper).</span> <span class="hidden">Uh oh.</span>
 
-<h2>Chapter 15. Prism Break (Maintenance boss)</h2>
+<h2>Chapter 20. Prism Break (Maintenance boss)</h2>
 
     <p>This is a really fun and unique puzzle.
         
@@ -506,7 +510,7 @@
         <tr><td class="cave"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="cave"></td></tr>
     </table>
 
-    <p>Rules like this, with different shadings of orthogonally-connected cells, come with an extremely handy little theorem about every 2x2 portion of the grid:
+    <p>Rules like this, with different shadings of orthogonally-connected cells, come with an extremely handy little theorem about every 2&times;2 portion of the grid:
 
     <table class="grid">
         <tr><td class="wall"></td><td class="cave"></td></tr>
@@ -517,7 +521,7 @@
 
     <p>I suggest using dark grey for wall cells and light grey for cave cells, because I think it looks nice on this puzzle. You might reasonably decide that the contrast isn't good enough, though, especially between the light-grey-and-pink and the default pink background.
 
-    <p>The second rule is the akari rule. (This comes from a completely different kind of logic puzzle called <a href="https://en.wikipedia.org/wiki/Light_Up_(puzzle)">"light up" or <i>akari</i></a>.) Lanterns always go in cave cells, and they illuminate other cave cells in all four orthogonal directions until they meet a wall. No two lanterns can ever see each other. I suggest coloring lantern cells yellow rather than trying to mark them in some other way; as long as the cave and lantern cells are both light colors and the walls are a dark color, you probably won't have trouble remembering that lantern cells are also cave cells. So this would be a valid placement of lanterns in the grid above:
+    <p>The second rule is the akari rule. (This comes from a completely different kind of logic puzzle called <a href="https://en.wikipedia.org/wiki/Light_Up_(puzzle)">"light up" or <i>akari</i></a>.) Some of the cave cells are going to be "lanterns". Lanterns casts light in all four orthogonal directions, illuminating any cave cells. Light only travels in straight orthogonal lines, never travels along diagonals. Light is also blocked by wall cells and doesn't illuminate cells on the other side. The big constraint in akari is that no two lanterns are ever permitted to illuminate each other, so if two lanterns are in the same row or column, there must be at least one wall cell between them. Since lantern cells are always cave cells, there's a bit of a visual collision when it comes to marking them in the grid. I suggest marking lantern cells by coloring them yellow rather than the light grey of a cave. As long as the cave and lantern cells are both light colors and the walls are a dark color, you probably won't have trouble remembering that lantern cells are also cave cells. With that in mind, this would be a valid placement of lanterns in the grid above:
 
     <table class="grid">
         <tr><td class="wall"></td><td class="lamp"></td><td class="cave"></td><td class="cave"></td><td class="wall"></td><td class="wall"></td><td class="cave"></td></tr>
@@ -529,9 +533,9 @@
         <tr><td class="lamp"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="lamp"></td></tr>
     </table>
 
-    <p>Note that it's fine if two different lanterns see the same cell; it's only a problem if they see each other.
+    <p>Note that it's fine if two different lanterns see the same cell; it's only a problem if they see each other. There are many different possible valid placements of lanterns in this grid, at least according to the rules of akari alone.
 
-    <p>The third rule is that the digit in a lantern cell is how many cells it illuminates, including itself. With the placements above, the digits would have to be:
+    <p>The third rule, which is special to this puzzle, is that the digit in a lantern cell tells you how many cells it illuminates, including itself. With the placements above, the digits would have to be:
 
     <table class="grid">
         <tr><td class="wall"></td><td class="lamp">3</td><td class="cave"></td><td class="cave"></td><td class="wall"></td><td class="wall"></td><td class="cave"></td></tr>
@@ -543,9 +547,9 @@
         <tr><td class="lamp">2</td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="wall"></td><td class="lamp">2</td></tr>
     </table>
 
-    <p>So that would not, in fact, be a legal lantern placement under the rules of sudoku.
+    <p>This, of course, interacts with the rules of sudoku, because it means you can never have two lanterns in the same row or column that illuminate the same number of cells. Our lantern placement violates that, so it would not, in fact, be a legal lantern placement under these rules combined. You can fix it by just moving the lantern in r7c1 to r6c1: all the cave cells are still illuminated, but now that lantern contains the digit 3 and doesn't violate sudoku.
 
-    <p>The final rule is the cages. Cages in this puzzle are always in wall cells, and the digit in a cage is the number of lanterns in the orthogonally adjacent cells. So if there were a cage in r5c5 in my little example, it would have to be filled with 2.
+    <p>The final rule is the cages. Cages in this puzzle are always in wall cells, and the digit in a cage is the number of lanterns in the orthogonally adjacent cells. So if there were a cage in r5c5 in my little example, it would have to be filled with 2. This will be a key rule for breaking into the puzzle.
 
     <p>Start by shading all of the cages as walls. Remember that all of these will have to connected to an edge of the puzzle. <span class="hidden">This means the digit in a cage can never be 4, because a lantern cell is always a cave cell, and a wall completely surrounded by cave cannot be connected to an edge. But of course it's fine for a cage that's sitting directly on an edge to be surrounded on all its other sides.</span>
 
@@ -573,13 +577,172 @@
 
     <p>The digit for the boss cell is <span class="hidden">5</span>.
 
-<h2>Chapter 16. Maintenance (grid 6)</h2>
+<h2>Chapter 21. Maintenance (grid 6)</h2>
 
-<h2>Chapter 17. Library (grid 5)</h2>
+    <p>You've unlocked the AKARI LANTERN rule. This is completely useless; there are no akari lanterns on the world map, and in fact the rules box doesn't even bother to list it. But you've also unlocked the DARK rule, and the rules box does cover that; go and read about it in the puzzle description box. Unlike the earlier rules, this one doesn't build out of the rules of the puzzle you just solved; it's just its own new thing. It's a little weird, don't worry about it. Anyway, the rule is just that dark-shaded cells have a lower value than all of the non-dark cells they're adjacent to; that's going to be the key to finishing the maintenance grid. The rule also mentions that fog doesn't clear easily around dark cells, but you can't control the fog clearing anyway, so it's not anything new.
+        
+    <p>I used to play a lot of greater-than sudoku puzzles, and this rule has a lot of the same characteristics. Generally, you tackle rules like this by thinking about how they rule out digits, keeping in mind that they give you the most information about the smallest and biggest digits that you haven't placed yet. <span class="hidden">What digits remain to be placed in r9?</span> <span class="hidden">The 1 cannot go in r9c2 or r9c4 without making it impossible to place a digit in r9c3.</span> <span class="hidden">The 1 in b8 must go in r7c4 or r7c6 by the same logic.</span> <span class="hidden">So the 1 in b9 must be in r8, and that means it must be in r8c8.</span> <span class="hidden">The 2 in b9 cannot in r8 because both of the remaining cells are greater than two other cells in the box.</span>
 
-    (TODO)
+    <p><span class="hidden">That puts some interesting constraints on the arrow in b7.</span> <span class="hidden">It has at least three cells, so these two cells cannot sum to more than 8.</span> <span class="hidden">These two must be at least 3, but they cannot be 5 because it is in r9 in this box, so they must be a 3/4 pair, and </span><span class="hidden">the dark clue forces the 4 into r7c2.</span>
 
-    <p><span class="hidden">What other clues affect this grid?</span> <span class="hidden">A 2 eye is very constrained: it must only be able to see the first cell and the 9.</span> <span class="hidden">The 9 must be in r5c3 or r6c3, and the 8 must be in b1, so the 8 is definitely visible. Therefore it must be in r1c3.</span>
+    <p>The dark cells in b8 are getting a little tight now. <span class="hidden">What digits are actually possible?</span> <span class="hidden">Neither r7c4 or r7c6 can be greater than 6 because they are less than two cells in the box, neither of which is 9. But they also cannot be 2/3/4/5, so they must be 1/6.</span> <span class="hidden">Because one of them is 6, its adjacent cells must be 7/8.</span> <span class="hidden">So r9c4 can now only be 2, which places r9c3 = 1.</span> <span class="hidden">Where is the 2 in b7? Only r8c1 is possible.</span> <span class="hidden">The arrow cells in b4 are either 1/8 or 2/9.</span>
+        
+    <p>This next leap is quite good. <span class="hidden">How do the constraints in b8 affect r6?</span> <span class="hidden">If r7c4 = 1, r6c4 must be at least 6.</span> <span class="hidden">That forces r6c5 to be at least 7, but it cannot be 9.</span> <span class="hidden">Meanwhile, r7c6 = 6, so r6c6 must be at least 7, but cannot be 9 because of the arrow.</span> <span class="hidden">That creates a 6/7/8/9 set in the row, and only r6c3 can be 9.</span> <span class="hidden">On the other hand, if r7c4 = 6, then r6c4 = 1.</span> <span class="hidden">So in either case, r6c3 = 9 and r6c2 = 2.</span> The revealed cells force the choice. <span class="hidden">If r7c4 = 1, there's a 6/7/8 set in r6 in b5, so </span> <span class="hidden">r5c4 = 9 by the dark rule.</span> <span class="hidden">The 7/8 in r6c6 would be on the arrow, </span><span class="hidden">and the circle of that arrow would have to be in r4c6 because otherwise the sum would have to be at least 10, </span><span class="hidden">but there is no longer a digit in b5 greater than r6c6 that can go in it.</span> So <span class="hidden">r7c4 = 6, r6c4 = 1, r7c6 = 1, and r8c6 = 3.</span>
+
+    <p>Back to the arrows. <span class="hidden">The arrow in c6 has at least two cells on the arrow in that column, but </span><span class="hidden">you can never put more than one cell greater than 4 on an arrow, and you've already placed 1/3/4 in c6, so </span><span class="hidden">r4c6 must be the circle, and </span><span class="hidden">r5c6 = 2 by the dark rule.</span> <span class="hidden">r6c9 cannot be less than 3, so r8c9 must be at least 6.</span> <span class="hidden">That forces r8c7 = 4.</span> <span class="hidden">By the dark rule, r7c7 = 2.</span> <span class="hidden">r7c9 must now be at least 5, and if it were any greater the arrow sum would be broken, so r8c9 = 9, r7c9 = 5, and r7c9 = 3.</span>
+
+    <p>Remember what I said about the general approach to greater-than rules. <span class="hidden">1 in b4 can only be r4 by the dark rule.</span> <span class="hidden">That forces r5c7 = 1.</span> <span class="hidden">The 2 in b6 can only be in r4c8 or r4c9.</span> <span class="hidden">It cannot be in r4c9 because the dark rule would force r4c8 = 1.</span> <span class="hidden">r4c9 is on a whisper line, but now it cannot be a low cell: it sees 1/2/3, and if it were 4, r3c9 would have to be 9, but that is already in r8c9.</span> <span class="hidden">So r2c9 and r4c9 are a 7/8 pair.</span> <span class="hidden">r5c9 = 4 is a naked single.</span>
+
+    <p>Time to look at b5 again. <span class="hidden">r5c5 can only be 3/6/7 by sudoku.</span> <span class="hidden">It cannot be 7 because r6c5 would be impossible to fill by the dark rule.</span> <span class="hidden">If it were 6, r6c5 = 7, but </span><span class="hidden">this makes it impossible to fill the arrow in c6: r6c6 could only be 5, but the circle in r4c6 cannot be 7.</span> <span class="hidden">So r5c5 = 3, which makes creates a 1/3 pair in r4c1 and r4c2.</span> <span class="hidden">r4c3 and r4c5 see each and are at least 4, so by the dark rule, r4c4 must be at least 6; but it cannot be 6/7 by sudoku.</span> <span class="hidden">Since the arrow sum in r4c6 must be at least 7, there is a 7/8/9 set in r4c4, r4c6, and r4c9.</span> <span class="hidden">The remaining cells in r4 must be 4/5/6.</span> <span class="hidden">The only possible cell for 9 in b6 is r5c8.</span>
+
+    <p>There's an arrow you haven't done much with. <span class="hidden">r3c4 must be at least 3 by sudoku.</span> <span class="hidden">It cannot be 3 because the dark rule would force a 1/2 into r2c4, so it is at least 4.</span> <span class="hidden">r4c5 must be 4/6 by sudoku, but it can no longer be greater than 5 by the arrow sum, so it is 4.</span> <span class="hidden">r3c4 cannot be greater than 5 by the arrow sum, and if it were 5, the circle would have to be in r3c3, and it would have to contain 9, which breaks sudoku. So r3c4 = 4.</span> This reveals a few more cells and permits some sudoku. <span class="hidden">r3c7 is the only possible place for 9 in r3.</span> <span class="hidden">r2c4 = 3 by the dark rule, which also forces r1c7 = 3.</span> <span class="hidden">r4c7 = 6, so the 5 in b6 must be in r6.</span> <span class="hidden">This means r6c6 must be at least 6, so r4c6 must be at least 8, creating an 8/9 pair in r4 and forcing r4c9 = 7.</span>
+
+    <p>Now think about small digits in b3. <span class="hidden">r1c9 and r3c9 are a 1/2 pair, and you've placed 3 already.</span> <span class="hidden">4 must be in c8, but there are no remaining digits smaller than it, so by the dark rule it must be in r2c8.</span> <span class="hidden">This forces 4 into r1c3, whicihi reveals a few more cells.</span> <span class="hidden">9 in b1 can only be in r1c2 by the dark rule.</span> The rest of the grid is finishable with sudoku.
+
+    <p>Okay! You revealed a short roaming line that leads back to the rest of the map, and the AKARI LANTERN has revealed a bunch of cells all around. You can zoom out and repeatedly undo/redo your last few digits to see exactly what changed, but here's the rundown:
+
+    <ul compact>
+        <li>The top boxes of the Courtyard (grid 1) have been revealed, including a whisper line and an eye on top of the grid.</li>
+        <li>A few cells in r9 of the Courtyard (grid 1) have been revealed, including a couple of clues that run off the bottom edge.</li>
+        <li>There's an eye clue on top of Quarters (grid 2).</li>
+        <li>There's a whisper line running off the bottom edge of Quarters (grid 2).</li>
+        <li>The rest of the Battlements (grid 4) have been revealed, including an extension of the whisper line in c6 and a book clue in r8c7.</li>
+        <li>Several boxes in the Library (grid 5) have been revealed, including a whisper line in b2.</li>
+        <li>There are some strange 5s outside of Maintenance (grid 6).</li>
+        <li>Several boxes have been revealed in the Hall of Illusions (grid 8), including a few more clues.</li>
+        <li>You can finally see a few cells in the Golden Temple (grid 9).</li>
+    </ul>
+
+    <p>Let's try to mop up the unfinished business in the earlier grids before heading back to the Library.
+
+<h2>Chapter 22. Courtyard (grid 1)</h2>
+
+    <p>The whisper line in r2 lets you finish this grid. <span class="hidden">r2c8 must be 1/3, so r2c7 must be at least 6, which is the highest it can be; therefore r2c7 = 6 and r2c8 = 1.</span>
+
+    <p>The eye above r1c9 is now looking at a fully-filled-in column, and you can just compute the right value for it. Go ahead and fill it in! <span class="hidden">It sees the 4, 7, and 9, so has a value of 3.</span>
+
+    <p>The new clues off the bottom of the grid are somewhat interesting, but there isn't much you can do without knowing how rules work off-grid. Hmm. Keep it mind for later.
+
+<h2>Chapter 23. Quarters (grid 2)</h2>
+
+    <p>There's clearly no way to fill a digit in the cell on the whisper line beneath r9c4. Hmm indeed.
+
+    <p>The only other new thing here is the eye above r1c5. As before, it's looking at a completed column, so you can just compute the right value: <span class="hidden">it sees the 7, 8, and 9, so it's 9.</span> You can fill that in, and assuming you also filled the eye clue in grid 1... oh hey.
+
+<h2>Chapter 24. Serpent (Hidden Puzzle 2)</h2>
+
+    <p>This sure looks like a grid, and if you click on a cell in it, the puzzle description box confirms that it's a 4&times;4 sudoku. It has no given digits, but it does have four eyes and a ROAMING palindrome line.
+
+    <p>Reasoning about the palindrome is the key here. The center of the palindrome is the pair of r4c1 and the cell immediately beneath it, the one with the eye clue. Cells that are an equal distance away from this will be the same. You'll be thinking about which cells are the same or different without knowing exactly which values they have, so this is a great place to use color (or, if you'd prefer, SudokuPad's letter tool, which will let you mark cells A/B/C/D; you can enable it in the gear menu, then hit the <code>9/A</code> button in any of the number-entry modes).
+    
+    <p>The palindrome has length 14, so you get 7 pairs from it. Two of them, of course, are just the 3s at the endpoints. Some of the pairs are more immediately helpful than others, but you can really start anywhere.
+        
+    <p>Looking at the center: <span class="hidden">the palindrome is saying that an eye clue and the first cell it sees must be the same.</span> <span class="hidden">This cannot be 4: the 4 is the highest digit in the grid, so if the first digit is 4, the eye clue must be 1 because no other cells are visible behind it.</span> <span class="hidden">It also cannot be 3, because the eye clue would have to be 2.</span> <span class="hidden">And it cannot be 1, because the eye would have to see at least the 1 and the 4. Therefore it is 2.</span>
+
+    <p>Looking at the ends: <span class="hidden">you can't do much with the eye clues, but you can color the cells in r2c1 and r4c3 the same; I picked blue.</span> <span class="hidden">Sudoku then places the blue digit in r3c2 and r1c4.</span> <span class="hidden">And the palindrome therefore also places it in the eye beneath r4c2.</span>
+
+    <p><span class="hidden">The next cells in from blue are definitely a different digit by sudoku, so you can shade it a different color; I picked purple.</span> <span class="hidden">It must be r2c4 and r4c1 by sudoku, which means it's 2.</span> <span class="hidden">The last cells on the palindrome within the grid are r2c3 and r4c2. Again, these are different digits from the others by sudoku, so you can color them differently; I picked green. Sudoku also puts them in r1c1 and r3c4. And the last four cells can be orange.</span>
+
+    <p>Alright, you've got the pattern of digits set, even if you mostly don't know which is which. How do the eyes constrain the colors? <span class="hidden">Blue cannot be 4 because putting a 4 in r3c2 would force the eye in c2 to see 2 cells, but this is also a blue cell by the palindrome.</span> <span class="hidden">Green cannot be 4 because putting a 4 in r1c1 would force the eye in c1 to see 3 cells.</span> <span class="hidden">Orange being 4 means that the eye in r2 must see 2 cells.</span> <span class="hidden">If blue were 1, the eye in c3 would see four cells, but the palindrome forces its digit to be 2. So blue is 3 and green is 1.</span>
+
+    <p>If you fill all of the cells, including the eyes, you should see the hidden puzzle get checked off in the quest progress box (in the bottom right of the map).
+
+<h2>Chapter 25. Battlements (grid 4)</h2>
+
+    <p>Just a little to mop up here. The new whisper line forces <span class="hidden">r5c6 = 9</span>, which should fill everything except 2-cell and 3-cell sets in each of the bottom six boxes.
+        
+    <p>It's been a bit since you've used a codex clue, and you're about to head back to the library, so r8c7 is a nice refresher. <span class="hidden">You're placing the 7 in this row. Sudoku forces the digit to be 5/7/9, but r8c5 and r8c9 are already filled with a non-7 digit, so r8c7 = 7.</span>
+
+    <p>Three pairs remain, but there's no way to resolve them for now. Don't get tempted by the Hall of Illusions; time to hit the books.
+
+<h2>Chapter 26. Library (grid 5)</h2>
+
+    <p>Alright, there are two new codex clues in c4, and they're on a whisper line. <span class="hidden">The codex clues have the same high/low polarity.</span> <span class="hidden">If they were high, they'd have to be a 7/9 pair by sudoku.</span> <span class="hidden">r1c5 is adjacent on the whisper line to both, so it would have to be 5 away from a 7, but it cannot be 1 or 2 by sudoku.</span> <span class="hidden">So the codex clues are low, and the other cells on the whipser are high. This puts 7/8 in r2c3.</span>
+
+    <p>Can you constrain that more tightly? <span class="hidden">A 2 eye is very constrained: it must only be able to see the first cell and the 9.</span> <span class="hidden">The 9 is in r6c3, and the 8 must be in c3 in b1, so it is definitely visible in front of the 9. Therefore it must be in r1c3, putting r2c3 = 7.</span> <span class="hidden">This means r1c4 = 2 because of the whisper line.</span> <span class="hidden">This is a codex cell, so r1c2 = 4.</span> <span class="hidden">r1c5 must be at least 7, but it cannot be 7/8 by sudoku, so it is 9.</span> <span class="hidden">r2c4 is 3/4, but it cannot be 3 because it's a codex clue and r2c3 = 7. So it is 4.</span>
+
+    <p>There's some sudoku to be done. <span class="hidden">r3c3 is the last possible cell for 1 in b1.</span> <span class="hidden">This creates a 1/5 pair in c6 in b2.</span> Back in b1, <span class="hidden">the open cells in c2 are 2/9, which makes the open cells in c2 in b7 3/7, which can be placed.</span> <span class="hidden">The 2 in b7 must be in r9c3.</span> <span class="hidden">That means the 4 in r9 must be in r9c8 or r9c9.</span> <span class="hidden">The 4 in c7 can only be in r3c7, which </span><span class="hidden">puts the 9 in c7 into r2c7.</span>
+
+    <p>Aha, the boss cell. Tidy up here with a little sudoku and then head in to find...
+
+<h2>Chapter 27. Book Constrictor (Library boss)</h2>
+
+    <p>Be sure to read the rules, because there's a lot of them. You've got three full columns of codex clues, six killer sudoku cages, and three circled cells that have to contain odd digits. But you've also got to place a snake: a non-branching, orthogonally-connected path through the grid. That's new, so let's spend some time on it.
+        
+    <p>You're going to want to mark cells for this. I suggest coloring cells that you know the snake doesn't pass through grey, and then you can use yellow for the snake cells. (Green doesn't show up well against the green background.) The rules tell you five things about the snake:
+        
+    <ol compact>
+        <li>The snake starts and ends in the circled cells in b6. You can go ahead and mark these two cells yellow.</li>
+        <li>The snake never passes through cages. You can go ahead and mark all of the cage cells grey.</li>
+        <li>The snake passes through all of the cells that index themselves: that is, all of the codex cells that contain their own column number. <span class="hidden">By sudoku, there must be a 1 in c1, a 5 in c5, and a 9 in c9, so since every cell in those columns is a codex clue, the snake must visit these three columns for at least one cell.</span></li>
+        <li>The snake never touches itself, even diagonally. So if two orthogonally-adjacent cells are both snake cells, they must be consecutive cells on the snake; and if two diagonally-adjacent cells are both snake cells, the snake must make a corner between them. This also means the snake cannot "turn around" in less than three cells:
+
+            <table class="grid">
+                <tr><td class="snake"></td><td class="snake"></td></tr>
+                <tr><td class="snake"></td><td              ></td></tr>
+                <tr><td class="snake"></td><td class="snake"></td></tr>
+            </table>
+        Otherwise it would touch itself diagonally.</li>
+        <li>The snake contains only odd cells. <span class="hidden">So there can be at most five snake cells in a row, column, or box.</span></li>
+    </ol>
+
+    <p>You can make some immediate inferences about the snake from all this. The snake cannot pass through the cage in c1, <span class="hidden">but there are only two cells above it, so if the snake entered either of them, it would not be able to turn around and would have to dead-end there, which it cannot.</span> <span class="hidden">Similarly, the snake cannot enter either of the cells beneath the cage in c9.</span> <span class="hidden">If the snake was in either r5c8 or r5c9, it would have to be a four-cell snake, so it could never visit c1 or c5; so these are non-snake cells, and the snake must also be in r3c9.</span> But the snake does have to enter c1 at some point. <span class="hidden">If it did not enter r6c1 (that is, go around the cage in r6), it would have to turn around in b7, but this would require at least 7 cells in the box to be snake, violating the only-odds rule. So it does have to pass through r7c1, r6c1, r5c1, and r5c2.</span> <span class="hidden">If it passed through r4c3, that would be all five odd cells in b4, so both cells in the 11 cage would have to be even, which is not possible.</span> <span class="hidden">Similarly, if it passed through r9c1, that would require all five odd cells in c1, but the 5 cage also needs one.</span> The snake must leave this corner somehow; you can actually constrain it already, but it's not particularly elegant, so let's leave it for now.
+
+    <p>Recall what you learned about codex clues in earlier grids: <span class="hidden">three codex clues in the same column <i>and</i> box must contain one apiece of 1/2/3, 4/5/6, and 7/8/9.</span> <span class="hidden">So the only way to fill the cage in b2 is a 6/9 pair. And these are codex clues, so you've constrained the 5 in b2, b3, and b1.</span> <span class="hidden">The 10 cage must have a 2/8 or 3/7 pair, which means the 5 cannot be in b8 in these two rows; so it must be in r9c4 or r9c5, making r9c5 4/5.</span>
+
+    <p>The snake must pass through self-indexing cells. <span class="hidden">So they cannot be in cages, meaning the 5 cage cannot be 1/4.</span> <span class="hidden">Making it 2/3 restricts the 1 in both b1 and b4.</span> <span class="hidden">If r4c1 = 3, r4c3 = 1; but that only leaves three other odd cells for the snake in the box, which is not enough for it to escape. So r4c1 = 2, r4c2 = 1, r3c1 = 3, and r3c3 = 1.</span> <span class="hidden">Since there is an odd digit in the 11 cage, the snake must pass through the other four odd digits in order to leave the box, so it must pass through r4c2 and r3c2.</span> <span class="hidden">If it did not pass through the 1 in r3c3, there would only have three odd digits left in b1, </span><span class="hidden">so it would have to leave b1 through r2c2 and r2c3, but then its three cells could not include the 5, which must be in r1 in this box. Three cells in a box cannot all be 7/9.</span>
+
+    <p>How does the snake you've been building connect to its ends in b6? <span class="hidden">The end in b1 must connect to r4c9, since otherwise the other end would be cut off.</span> <span class="hidden">If it doesn't go through r1c5, it must go around the 15 cage the other way.</span> <span class="hidden">So it would have to occupy at least r3c4 and r3c6, but that would put 6 odd cells in r3.</span> <span class="hidden">Therefore r1c4, r1c5, and r1c6 must be snake cells; more specifically, </span> <span class="hidden">they must be 1/3/7, because 5 and 9 are already restricted in b2.</span> <span class="hidden">This means r2c4 and r3c4 must be even, so they cannot be snake cells.</span> <span class="hidden">Forcing the snake through r2c3 and r1c3 means there are four snake cells in b1, which means the 5 must be in r1c3.</span> <span class="hidden">There are already four odd cells in r1, so the snake cannot pass through r1c8 or r1c9.</span> Similarly, <span class="hidden">there are four odd cells in r3, so the snake cannot pass through r3c6 or r3c7.</span> <span class="hidden">So it must pass through at least r2c7 and r2c8.</span>
+
+    <p>All these restrictions mean something for the codex clues. In b1, <span class="hidden">the 1 in r1 must be in b2, so r1c1 must be 4/5/6, and it cannot be 5.</span> <span class="hidden">The 1 in r2 must be in b3, so r2c1 must be 7/8/9, and it must be 8.</span> The 5 you placed earlier tells you two things: <span class="hidden">r1c5 = 3, and </span><span class="hidden">the 10 cage in b8 cannot be 3/7.</span>
+    
+    <p>You've constrained digits interestingly in r1. <span class="hidden">r3c2 and r2c3 are 7/9, so the 9 in r1 must be in b9.</span> <span class="hidden">It cannot be in r1c7 because that would make r1c9 = 7, but the 7 in r1 is already in b2.</span> <span class="hidden">It cannot be in r1c9 because it would be self-indexing, and the snake cannot pass through this cell.</span> Well, hold on, what does that mean? <span class="hidden">The 9 in b3 must be in r1c8, which means it sees every possible snake cell in c9 except r4c9. For the snake to pass through the self-indexing 9, then, it must be true that r4c9 = 9.</span> <span class="hidden">There's also now an odd cell in b1 which isn't on the snake, so there can only be four snake cells in this box, forcing the snake through r2c6 and making that cell 5.</span> <span class="hidden">This makes r2c5 = 6 by the indexing rule, so r3c5 = 9 by the cage, and finally r3c9 = 5.</span> <span class="hidden">This makes r2c3 = 9, so r2c9 = 3 by indexing; that must be a snake cell, and the last snake cell here, r2c7, is 7.</span>
+
+    <p>There's a cage you've been neglecting. <span class="hidden">The 11 cage in c9 must be 4/7 by sudoku, and </span><span class="hidden">the 7 cannot be in b6 or there'll be two 9s in the box. That places those digits; don't forget the 9s.</span> <span class="hidden">The 11 cage in r6 now sees a 4 and 9 in the row and a 5 in both of its columns, so it must be 3/8.</span> <span class="hidden">The snake cells in b4 must be 5/7/9, and r5c2 can only be 9.</span> <span class="hidden">r7c1 can only be 1.</span> <span class="hidden">r6c8 must be odd, but it cannot be 1/3/9 by sudoku, and </span><span class="hidden">it cannot be 5 because of indexing from the 10 cage in b8.</span> <span class="hidden">The 13 cage now sees a 7 and 9, so it must be 5/8, and the 5 must be in r4c7.</span> <span class="hidden">Therefore r4c5 must be 7.</span>
+        
+    <p>The snake's path is constrained now. <span class="hidden">The 3 and 7 in b5 are in r4 and cannot be visited by the snake.</span> <span class="hidden">So the snake can use at most 3 cells in this box; if it enters r6c4, it must exit as quickly as possible by passing through r6c5 and r6c6, but there simply aren't three odd digits left unplaced in r6.</span> <span class="hidden">Therefore the snake passes through r9c5, as well as r9c4 and r9c6.</span> <span class="hidden">r9c5 must be 5.</span> At this point, sudoku will finish most of the top two-thirds of the puzzle. <span class="hidden">The remaining cells in c5 are 1/4, and the 4 cannot be in r6c5. This eventually sets r3c6 = 4, which forces r1c1 = 6. This puts r1c6 = 1 using the codex clue.</span>
+
+    <p>After you're done up there, get back to the snake. <span class="hidden">The snake must move down into r7c8, which can only be 5.</span> <span class="hidden">That's the last odd digit in c8, so it must turn left into r7c7.</span> A little sudoku will fill in the last of the codex cells; be sure to place the indexed digit appropriately. <span class="hidden">The only legal place for 7 in r9 is r9c3.</span> <span class="hidden">You can finally use the circle clue in r8c3: it is forced to be 3.</span> <span class="hidden">Sudoku forces r8c7 = 8, so the snake must pass into r7c6 and r8c6, using all of the odd digits in b8. Its path through b7 is also completely determined.</span> Sudoku will take care of the last few cells. The boss cell should be filled with <span class="hidden">9</span>.
+
+<h2>Chapter 28. Library (grid 5)</h2>
+
+    <p>Placing that digit reveals the rest of the library grid, but it also reveals a new quest: Wall Sandwiches. This is optional, and frankly it's not much of a puzzle; on the one hand, you can skip it, and on the other hand, it's not really a burden to do it anyway. The reward for completing it is some extra clues for the next few grids. These extra clues can all easily be ignored, so if you don't want them, you can just pretend they're not there either way. This walkthrough will be explaining how to solve the puzzles without them. It's really up to you.
+
+    <p>Anyway, to do Wall Sandwiches, you need to click the quest marker (just below r9c9 in the library) and read the description in the puzzle description box. This will explain the puzzle, and more importantly, it will tell you how to report the answer in a way that will show you the remaining clues. Basically, there are some sandwich icons in the walls outside certain grids; for example, there's a 17 sandwich outside r3 in the Quarters (grid 2). This number is the sum of the cells between two unknown digits in that row or column; the puzzle is to deduce the two digits. Once you've figured them out, you put them, in increasing order, on the appropriate cells in the quest progress box (in the bottom-right of the world map). This will reveal another set of sandwich icons, which you solve the same way. Complete walkthrough:
+
+    <ul compact>
+        <li>General idea: <span class="hidden">once you have all the digits placed in a row or column, there's an efficient algorithm for finding the possible sandwich digits for a given sum. Just scan down the row or column. For each cell, sum the following cells until you reach or exceed the target number. If you reach it exactly, you have a pair of possible sandwich digits; otherwise, that digit cannot work.</span></li>
+        <li>First sandwich: 17. <span class="hidden">r3 in grid 2 only has only possible set of sandwich digits, 3/8 (which surround 4/7/6). You can check that this also works for the other two clues in grid 1 and grid 4. Enter <code>3 8</code> in the quest progress box.</span></li>
+        <li>Second sandwich: 19. <span class="hidden">c2 in grid 5 is ambiguous and allows either 3/8 or 4/5, but only 4/5 works in r9 of grid 6. Enter <code>4 5</code> in the next line of the quest progress box.</span></li>
+        <li>Third sandwich: 9. <span class="hidden">r3 in grid 2 works with either 2/9 or 5/7. c6 in grid 2 works with either 2/9, 3/5, or 1/9. Enter <code>2 9</code> in the last line of the quest progress box.</code></span></li>
+        <li>The second and third sandwiches also provide some clues for row and columns you haven't fully solved yet; these are the extra clues. If you really don't want them, you can always just delete the answers from the progress box and they'll disappear.</li>
+    </ul>
+
+    <p>Back to the normal library grid. Filling the boss cell immediately creates a few sudoku opportunities. It also gives you an arrow, which can be easily solved (<span class="hidden">it's 1/8 because every other option runs afoul of digits already in b9</span>), and that resolves the rest of the grid.
+
+<h2>Chapter 29. Portal (grid X)</h2>
+
+    <p>This is a fun little interlude. The "portal" is a 5&times;6 grid connecting the library grid to the "elsewhere" grid on the right edge of the map. The portal is <i>not</i> a sudoku grid; it's a completely different kind of puzzle called fillomino. In a fillomino puzzle, you are responsible for dividing the grid into orthogonally-connected regions. Regions of the same size can never touch orthogonally. Every cell in a region is filled with the size of the region. So, for example, this is a valid division of a 4&times;3 fillomino grid:
+        
+        <table class="grid">
+            <tr><td class="l t r b">1</td><td class="  t    ">4</td><td class="  t r b">4</td><td class="  t r  ">2</td></tr>
+            <tr><td class="l     b">4</td><td class="    r b">4</td><td class="    r  ">3</td><td class="    r b">2</td></tr>
+            <tr><td class="l     b">2</td><td class="    r b">2</td><td class="      b">3</td><td class="    r b">3</td></tr>
+        </table>
+        
+    <p>This grid is seeded for you by a 1 and a 2... and by the five digits that overlap c9 of the library grid. So e.g. r2c1 is part of a nine-cell region, each cell of which must be filled with 9. You're going to get started here by applying one of the basic ideas of fillomino: finding a region that needs to grow but is constrained in an interesting way. In this case, <span class="hidden">every region in c1 except the 1 has to grow, and it can only grow to the right.</span> <span class="hidden">Now, the 3 region still needs to grow, but it can grow in two directions, so it's not yet forced to grow anywhere in particular; but the 6-region and 9-region have to grow to the right another cell.</span> <span class="hidden">Now the 6-region has to take its fourth cell in r2c4, but the 9 region can only grow by taking r4c3, which forces the 3 to grow (to its full size) by taking r5c2.</span> And... hmm, it's not clear how to make progress from here.
+
+    <p>This next step is really cool. Hint: <span class="hidden">don't forget how you started.</span> <span class="hidden">c6 of the portal grid overlaps c1 of Elsewhere (grid 7).</span> <span class="hidden">This is a sudoku grid again, and digits can't repeat in it! This is actually mentioned in the rules for the portal grid, but you might have forgotten.</span> <span class="hidden">That means there must be 5 different digits in c6, the same way there are in c1; you can't have a region that runs vertically. And those digits must be in five different regions.</span>
+
+    <p>Do some <span class="hidden">counting</span>. <span class="hidden">There are 5 &times; 6 = 30 cells in this grid.</span> <span class="hidden">The regions that overlap c1 account for 2 + 6 + 9 + 3 + 1 = 21 cells.</span> <span class="hidden">There are also at least two regions in the center of the grid because of the given 1 and 2, and they must be different regions from the c1 regions; so that's 24 cells spoken for.</span> <span class="hidden">So there are only 6 cells at most that can go into new regions that overlap c6.</span> <span class="hidden">If all of the cells in c6 were in new regions, the least number of unaccounted-for cells that would require is 1 + 2 + 3 + 4 + 5 = 15; so at least one of the regions we've already got must overlap c6.</span> <span class="hidden">Only two of them can reach c6: the 6-region and the 9-region.</span> <span class="hidden">So we need at least 3 new regions, and since they can only account for at most 6 more cells, they must be a 1-region, a 2-region, and a 3-region.</span>
+
+    <p>That constrains the regions a lot. <span class="hidden">The 6-region can only reach c6 by being a horizontal from r2c1 to r2c6.</span> Don't forget that you've <span class="hidden">accounted for all of the cells, so you cannot add any regions that don't overlap c6.</span> <span class="hidden">So the only way to fill r1c4 is to put the new 3-region up there.</span> <span class="hidden">The remaining new regions are a 1-region and a 1-region, so only the 9-region can be in r5c3 and r5c4. That's 6 of the 9 cells placed.</span> <span class="hidden">The new 2-region in c6 must extend leftwards into c5.</span> <span class="hidden">It cannot be in r4 without touching the first cell of the old 2-region.</span> <span class="hidden">It cannot be in r5 without making it impossible to place the second cell of the old 2-region. So it is in r5c5 and r5c6.</span> There is only one way to fill out the remaining regions.
+
+<h2>Chapter 30. Elsewhere (grid 7)</h2>
+
+    <p>Finishing the portal reveals most of the next grid. This is an irregular sudoku grid: it follows the normal row and column restrictions of sudoku, but instead of having a regular 3&times;3 array of 3&times;3 boxes, it has arbitrary regions of 9 orthogonally-connected cells. These regions still have the same restriction as boxes, though: they must contain all the digits from 1-9, which means digits cannot repeat within the region.
+
+    <p>You can see the borders of 7 of the regions. The border between the other two can be easily deduced: <span class="hidden">the region that contains r5c5 must also contain the 5 cells to its top, bottom, and left, and running right, it reaches 9 cells at r5c8. You should see that the grid is horizontally symmetric, at least with respect to the regions.</span> If you want to draw this line, you can use SudukuPad's pen tool: click on the gear icon above the number pad, then click on Enable Pen Tool. This adds a fifth entry mode to the right of the number pad; make sure the drop-down box says either "Edge Only" or "Edge and Center", then drag along the edge in the grid to draw a bold edge line there.
 
 <h2>And a whole lot more...</h2>
 
@@ -587,5 +750,5 @@
 
     <p>My thanks to Skeptical Mario for a wonderful puzzle hunt, to <a href="https://svencodes.com/">Sven Neumann</a> for SudokuPad, and to the folks at <a href="https://crackingthecryptic.com/">Cracking the Cryptic</a> for introducing me to a world of puzzles beyond dreary machine-generated killer sudokus.
 
-    <p><i>Sudokuvania: Digits of Despair guide v0.3, written by <a href="mailto:rjmccall@gmail.com">John McCall</a>, July&ndash;August 2025.</i></p>
+    <p><i>Sudokuvania: Digits of Despair guide v0.4, written by <a href="mailto:rjmccall@gmail.com">John McCall</a>, July&ndash;August 2025.</i></p>
 </body>
