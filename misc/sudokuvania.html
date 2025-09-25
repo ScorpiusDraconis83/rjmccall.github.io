@@ -868,10 +868,66 @@
     <ul compact>
         <li>The zipper line cells outside of the grid are paired up, with one digit in each pair given, so you can go ahead and fill in those four cells. If you look around, you can also see the zipper line show up elsewhere on the map, but you can't do anything with that yet &mdash; you won't know how those cells pair up until you can see more of the line.</li>
         <li>You now know exactly which digits are on the line in c8: <span class="hidden">they're 1/7, 2/6, and 3/5 sums.</span> <span class="hidden">So the other three cells in the column are 4/8/9, and of those, r5c8 can only be 9.</span></li>
-        <li>One of the digits is even more constrained: <span class="hidden">r7c8 has to be 3/6, so r3c8 has to be 5/2, and it cannot be 2.</span> <span class="hidden">And that's very useful because it places 8 and 4 in r3c2 and r3c3, which in turn makes r7c2 and r7c3 a 5/7 pair, which makes r7c5 a 4.</span> <span class="hidden">That means r9c1 is also 4, which makes r9c8 = 8 and r1c8 = 4.</span></li>
+        <li>One of the digits is even more constrained: <span class="hidden">r7c8 has to be 3/6, so r3c8 has to be 5/2, and it cannot be 2.</span> <span class="hidden">And that's very useful because it places 8 and 4 in r3c2 and r3c3, which in turn makes r7c2 and r7c3 a 5/7 pair, which makes r7c5 a 4.</span> But you know something about that cell: <span class="hidden">the digit in r7c5 must be in either r9c1 or r9c9. Therefore r9c1 is 4.</span> Finally, that brings you back to the column which started this: <span class="hidden">r9c8 = 8 and r1c8 = 4.</span></li>
     </ul>
 
+    <p>Stay there for a moment. There are four remaining digits. <span class="hidden">The 6 can only be in r6c8 or r8c8.</span> <span class="hidden">Both of these cells are on the zipper line.</span> <span class="hidden">So that 6 must be paired with a 2 in either r2c8 or r4c8.</span> <span class="hidden">Therefore r3c6 = 1 and r3c4 = 2.</span> <span class="hidden">That means the 1 in c8 must also be in either r6c8 or r8c8, so </span><span class="hidden">the 7 must be in either r2c8 or r4c8, and it cannot be in r2c8.</span> <span class="hidden">Therefore r2c8 = 2, r4c8 = 7, r6c8 = 1, and r8c8 = 6.</span>
 
+    <p>There's a lot you can figure out just with sudoku now. Spiralling from r3: <span class="hidden">r3c7 and r3c9 are a 7/9 pair, so </span><span class="hidden">r4c9 and r6c9 are a 2/4 pair.</span> <span class="hidden">The 4 in r8 must be in b9, so </span><span class="hidden">r6c7 cannot be 1/3/4, so it must be 2, which settles r6c9 and r4c9.</span>
+
+    <p>There's one last zipper pair in this puzzle. <span class="hidden">What digits are constrained in c7?</span> <span class="hidden">The 1 can only be in one of the zipper cells, so they must be a 1/7 pair, but r1c7 cannot be 7.</span> You can finish r3 by sudoku, but something else much more interesting just happened: a new quest right above r1c8, and some new revealed cells way in the bottom-left of the map. You don't need this to finish Elsewhere, but we'll come back to it soon, I promise.
+
+    <p>c1 and c9 have some interesting structure: <span class="hidden">r2c1 and r8c1 are a 5/8 pair, and r2c9 and r8c9 are a 5/9 pair.</span> Meanwhile, <span class="hidden">r7c4 and r7c6 are an 8/9 pair.</span> <span class="hidden">If they were 8 and 9 respectively, both r8c1 and r8c9 would have to be 5.</span>
+
+    <p>It's time to look into the eyes. Remember how to use these clues. The most obvious restriction is that r9c3 <span class="hidden">cannot be greater than 5, or else it would be impossible for the eye beneath it to see five cells.</span> By the same logic, r1c3 <span class="hidden">cannot be greater than 7, </span><span class="hidden">r8c3 cannot be greater than 6, and </span><span class="hidden">r2c3 cannot be greater than 8</span>. <span class="hidden">So the only cell that 9 can be in c3 is r4c3, and that means </span><span class="hidden">the only cell that 8 can be in is r2c3.</span> Since the bottom eye <span class="hidden">can no longer see the 8, </span><span class="hidden">r9c3 cannot be 5 anymore, and </span><span class="hidden">r7c3 cannot be 7.</span>
+
+    <p>A lot of sudoku is now unblocked, and that very nearly solves the grid by itself: all that's left are four ambiguous cells in the lower left, which can be resolved by <span class="hidden">observing that the bottom eye already sees 5 cells: r9c3 (whatever it is), r7c3, r6c3, r5c3, and r4c3.</span> <span class="hidden">Therefore it must not also see r8c3, and so r9c3 = 2 and r8c3 = 1.</span>
+
+<h2>Chapter 33. Outside the boxes: Tutorial</h2>
+        
+    <p>Okay. Now it's time to read that quest just above r1c8 in Elsewhere. This quest is not optional! You can skip the hidden puzzles you find, but you need to complete at least the zipline in order to make progress in the map.
+
+    <p>Got it? You can fill cells outside the grids with any digit, including 0, but you can also leave them blank. And the rules all actually leave room for this &mdash; as you're about to see, because there's a sort of tutorial that's also been revealed in the bottom-left of the grid, just to the left of the Courtyard (grid 1) and under the Front Gate.
+
+    <p>The first tutorial is thermos and arrows. You can leave cells on thermos and arrows blank, but the arrow's circle must have a digit in it, and the filled-in cells on the arrow must sum to that digit. <span class="hidden">Since there must be a digit in the circle, and it's also on the arrow and therefore must be greater than 8, it must be 9.</span> <span class="hidden">So the remaining cells on the arrow must sum to 1, i.e. there must be a 1 somewhere on the arrow.</span> <span class="hidden">You cannot put the 1 anywhere on the thermo because of the 8, so it must be in the corner cell.</span>
+
+    <p>The second tutorial is whispers and dots. Dotted cells must contain a digit, so they're exactly like normal. Whisper lines are <i>very</i> different, both because they can contain 0 and because they ignore unfilled cells: two cells are now adjacent for the rule if all the cells between them on the line are unfilled. <span class="hidden">The 8 must be dotted with a 4, and the 0 must be dotted with a 0.</span> For the upper line, <span class="hidden">there is nothing you can place between 0 and 8 that is at least 5 away from both, but that's fine, because if you leave the center cell blank, the 0 and 8 are adjacent and are more than 5 apart.</span> On the lower line, <span class="hidden">0 and 4 are not 5 apart, so the same trick doesn't work. The only digit 5 apart from 4 is 9, and fortunately that's also more the 5 apart from 0.</span>
+    
+    <p>The final tutorial is about zippers. The center cell must contain a digit, and equidistant pairs must still sum to that. So at least one cell in each pair must be filled. <span class="hidden">The center cell is on a thermo that starts with 8, so it must be 9.</span> <span class="hidden">The remaining thermo cell cannot be filled, because there are no digits between 8 and 9.</span> <span class="hidden">The cell to the left must therefore also be 9.</span>
+
+    <p>That completes the tutorial and reveals most of the zipper line earlier in the puzzle. But before you try that, recall that you've been seeing a bunch of clues that run off the grid all along. Why not see if you can satisfy any of them?
+
+    <p>In grid 2, there's a whisper cell between a 1 and a 9. <span class="hidden">That's clearly unfillable.</span> In grid 1, there's a thermometer cell between a 3 and a 4. <span class="hidden">That's also clearly unfillable.</span> And there's a whisper cell between a 5 and a 6. <span class="hidden">That can be filled! It has to be 0.</span> Oh hey, look at that, a hidden puzzle.
+
+<h2>Chapter 34. Outside the boxes: Dancer</h2>
+
+    <p>Most of this puzzle is a 4&times;4 sudoku grid, which as usual must be filled with 1/2/3/4. That means only two cells count as outside the grid, and one of them is the arrow circle; keep that in mind.
+
+    <p>The first thing to do is to try to constrain the arrow sum. <span class="hidden">The total sum of the digits in the grid is 40.</span> <span class="hidden">The arrows contain all but two of those cells, and </span><span class="hidden">those cells see each other and therefore can sum to at most 7.</span> <span class="hidden">So the digits on these arrow sum to at least 33, without even counting the cell off the grid. The circle sum must be 9.</span>
+
+    <p><span class="hidden">The arrow in c1</span> <span class="hidden">sums to 9, so r4c1 = 1.</span> <span class="hidden">If r1c2 = 1, the arrow ending in r4c2 would already sum to 9 without even counting r1c3. So the 1 in c2 must be in r2c2.</span>
+
+    <p><span class="hidden">The arrow ending in r4c3</span> <span class="hidden">uses the same digits in b2 and b4.</span> <span class="hidden">These digits cannot sum to more than 4 without breaking the arrow sum, </span><span class="hidden">so they must be either 1/2 or 1/3; in either case they have the 1, and so r1c4 = 1 and r3c3 = 1.</span>
+
+    <p><span class="hidden">In b2,</span> <span class="hidden">neither r2c4 nor r1c3 can 4 without breaking their respective arrow-sums, so r2c3 = 4.</span> <span class="hidden">Now r1c2 cannot be 4 because r4c4 would have to be 1 to make the arrow-sum work. So r1c1 = 4.</span> <span class="hidden">This puts a 4 on the arrow ending in r4c2, but the c2 cells of this arrow cannot sum to more than 7 because r1c3 must be at least 2.</span> <span class="hidden">Therefore r1c2 = 3 and r1c3 = 2.</span>
+        
+    <p>The rest of the grid can be filled by sudoku, but that's not quite the end: <span class="hidden">the in-grid cells on the five-cell arrow only sum to 8, so the cell to the right of the circle must be filled with 1.</span>
+
+<h2>Chapter 35. Outside the boxes: Zipline</h2>
+
+    <p>You can finally count cells on this zipline to figure out which pairs are equidistant &mdash; not quite all the way to the end, but a decent distance. It's a little tedious, though, and you don't actually need to: just fill them in from the right.
+        
+    <p>The cell to the left of the eye above Elsewhere was revealed to be a 6. <span class="hidden">So the lower half of that pair must be 2.</span> <span class="hidden">The 2 is dotted, so the cell to its left must be 1/4.</span> <span class="hidden">The upper half of that pair must therefore be 4/7, but it's dotted, so it and its pair must both be 4.</span> <span class="hidden">The cell dotted to the upper 4 must be 2/8.</span> <span class="hidden">The cell dotted with that must be 1/4.</span> <span class="hidden">So the lower halves of those pairs must be 0/6/blank and 4/7, respectively.</span> <span class="hidden">If the left cell on the upper line were 1, the right cell would have to be 2, and they would be paired with 7 and 6 respectively. But the lower halves are on a whisper line, which would be broken. So the left pair is 4 and 4.</span> <span class="hidden">The only digit that 4 can be adjacent to on a whisper line is 9, and that would immediately break the zipline sum. So the lower half of the right pair must be blank, and the top half must be 8, which works.</span>
+
+    <p>Next up are the paired thermos. Note that the upper thermo grows to the left and the lower thermo grows to the right. The circle on the bottom <span class="hidden">is in a dotted pair, and it must be less than 8, so </span><span class="hidden">the upper cell paired with it must also be filled with at most 8.</span> <span class="hidden">Therefore all of the intermediate cells on both thermos are either unfilled or less than 8.</span> <span class="hidden">All of these cells that are on the zipper are paired with cells with the same constraint.</span> <span class="hidden">So all of those cells must be filled, because otherwise they would have to be paired with an 8.</span> <span class="hidden">The rightmost dotted pair on the bottom thermo must be in increasing order to the right.</span> <span class="hidden">If it were 0/0, 1/2, or 2/4, it would not be possible to fill the three cells to its left; and if it were 4/8, it would break the thermo immediately. So these cells are 3 and 6 in that order.</span> <span class="hidden">Since the other cells that are on both the thermo and the zipline must be filled, they must be 0, 1, 2, and 7.</span> <span class="hidden">The cell dotted with 0 must be 0. The intermediate cell on the lower thermo must be unfilled.</span> Don't forget to fill in all the paired cells. And don't forget that the <span class="hidden">2 on the lower line is also on a palindrome line, so you can place the corresponding 2.</span>
+
+    <p>Continuing to the left, you'll find some unrevealed cells on the zipline. However, since the gaps are all a single cell and the zipline cannot branch, this does not create any ambiguity about the pairing. The 2 in the eye above the Library must be paired with a 6. The 6 in r1c5 of Maintenance must be paired with a 2 &mdash; oh look, another hidden puzzle... but you can come back to that in a moment. Just keep filling in pairs. Eventually you'll reach the <span class="hidden">2</span> in r5c9 of Quarters, and that must be paired with a <span class="hidden">6</span> in r6c9 of the Hall of Illusions. You should see in the Quest Progress box that you've now finished the Fast Travel Zipline, but much more importantly, you should also see a very interesting warning about the Hall of Illusions! You'll come back to this later; it's time to solve the hidden puzzle you just found.
+
+<h2>Chapter 36. Outside the boxes: Wolf</h2>
+
+    <p>
+
+<h2>Chapter 37. Hall of Illusions (grid 8)</h2>
 
 <h2>And a whole lot more...</h2>
 
@@ -879,5 +935,5 @@
 
     <p>My thanks to Skeptical Mario for a wonderful puzzle hunt, to <a href="https://svencodes.com/">Sven Neumann</a> for SudokuPad, and to the folks at <a href="https://crackingthecryptic.com/">Cracking the Cryptic</a> for introducing me to a world of puzzles beyond dreary machine-generated killer sudokus.
 
-    <p><i>Sudokuvania: Digits of Despair guide v0.5, written by <a href="mailto:rjmccall@gmail.com">John McCall</a>, July&ndash;August 2025.</i></p>
+    <p><i>Sudokuvania: Digits of Despair guide v0.6, written by <a href="mailto:rjmccall@gmail.com">John McCall</a>, July&ndash;September 2025.</i></p>
 </body>
